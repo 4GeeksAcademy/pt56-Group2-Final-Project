@@ -10,8 +10,9 @@ class User(db.Model):
     first_name = db.Column(db.String(80), unique=False)
     last_name = db.Column(db.String(80), unique=False)
     perm_location = db.Column(db.String(80), unique=False)
-    places_visited = db.Column(db.ARRAY(db.String), unique=False)
-    wishlist_places = db.Column(db.ARRAY(db.String), unique=False)
+    places_visited = db.Column(db.String, unique=False)
+    wishlist_places = db.Column(db.String, unique=False)
+    #will make array by separating by comma
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -28,7 +29,9 @@ class User(db.Model):
             "wishlist_places": self.wishlist_places
             # do not serialize the password, its a security breach
         }
-    
+
+
+
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
