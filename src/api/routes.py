@@ -6,6 +6,7 @@ from api.models import db, User, Post, Comment, Friends
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 
+
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
@@ -161,3 +162,16 @@ def deletePost():
     }
 
     return jsonify(response_body), 200
+
+
+@api.route('/friends', methods=['GET'])
+def get_all_friends():
+    all_friend_relationships = Friends.query.all()
+    friend_pairs = []
+    all_relationships_by_id = list(map(lambda x: x.serialize(), all_friend_relationships))
+    for relationship in all_relationships_by_id:
+        user = User.query.get(relationship['user_id'])
+        friend = User.query.get(relationship['friend_id'])
+        friend_pairs.append({user.username:friend.username})
+    return friend_pairs
+
