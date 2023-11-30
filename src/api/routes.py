@@ -6,6 +6,7 @@ from api.models import db, User, Post, Comment, Friends
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 api = Blueprint('api', __name__)
 
@@ -175,3 +176,17 @@ def get_all_friends():
         friend_pairs.append({user.username:friend.username})
     return friend_pairs
 
+#login
+@api.route('/token', methods=['POST'])
+def create_token():
+    email = request.json.get("email")
+    password = request.json.get("password")
+    # Query your database for username and password
+    user = User.query.filter_by(email=email, password=password).first()
+    if user is None:
+        # the user was not found on the database
+        return jsonify({"msg": "Bad email or password"}), 401
+    
+    # create a new token with the user id inside
+    access_token = create_access_token(identity=user.id)
+    return jsonify({ "token": access_token, "user_id": user.id }) ,200
