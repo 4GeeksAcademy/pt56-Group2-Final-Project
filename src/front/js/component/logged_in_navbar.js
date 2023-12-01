@@ -1,8 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import { useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext";
+import { useContext} from "react";
+
 // "Link" paths just written are just for reference, should be changed later
 export const LoggedInNavbar = () => {
+    const navigate = useNavigate();
+	const { store, actions } = useContext(Context);
 	return (
 		<nav className="navbar navbar-light bg-light border-bottom">
 			<div className="container-fluid">
@@ -20,8 +26,8 @@ export const LoggedInNavbar = () => {
                     </Link>
                 </div>
                 <div className="ml-auto">
-                    <Link to="/myposts">
-                        <span>My Posts</span>
+                    <Link to="/profile">
+                        <span>My Profile</span>
                     </Link>
                 </div>
                 <div className="ml-auto">
@@ -36,7 +42,7 @@ export const LoggedInNavbar = () => {
                 </div>
                 <div className="ml-auto">
                     <Link to="/logout">
-						<button className="btn btn-outline-danger">Logout</button>
+						<button className="btn btn-outline-danger" onClick={() => actions.logout(navigate)}>Logout</button>
 					</Link>
 				</div>
 			</div>

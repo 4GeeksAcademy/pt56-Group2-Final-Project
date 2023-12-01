@@ -164,7 +164,7 @@ def deletePost():
 
     return jsonify(response_body), 200
 
-
+#get all friend pairs
 @api.route('/friends', methods=['GET'])
 def get_all_friends():
     all_friend_relationships = Friends.query.all()
@@ -175,6 +175,7 @@ def get_all_friends():
         friend = User.query.get(relationship['friend_id'])
         friend_pairs.append({user.username:friend.username})
     return friend_pairs
+
 
 #login
 @api.route('/token', methods=['POST'])
@@ -205,4 +206,5 @@ def protected():
         return jsonify(response_body)
     
     return jsonify({"id": user.id, "username": user.username, "email": user.email, "first_name": user.first_name, "last_name": user.last_name,
-            "permanent_location": user.perm_location }), 200
+            "permanent_location": user.perm_location, "places_visited": user.places_visited, "wishlist_places": user.wishlist_places }), 200
+

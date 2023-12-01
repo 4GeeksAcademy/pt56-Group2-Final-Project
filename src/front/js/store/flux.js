@@ -29,28 +29,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			login: async (email, password) => {
-				try {
-				  let response = await fetch(apiUrl + "/api/login", {
-					method: "POST",
-					headers: {
-					  "Content-Type": "application/json",
-					},
-					body: JSON.stringify({ email: email, password: password }),
-				  });
+			// login: async (email, password) => {
+			// 	try {
+			// 	  let response = await fetch(apiUrl + "/api/login", {
+			// 		method: "POST",
+			// 		headers: {
+			// 		  "Content-Type": "application/json",
+			// 		},
+			// 		body: JSON.stringify({ email: email, password: password }),
+			// 	  });
 		
-				  let data = await response.json();
+			// 	  let data = await response.json();
 		
-				  if (data) {
-					console.log(data.token);
-					sessionStorage.setItem("token", data.token);
-					sessionStorage.setItem("userID", data.user_id);
-					return true;
-				  }
-				} catch (error) {
-				  console.log(error);
-				}
-			  },
+			// 	  if (data) {
+			// 		console.log(data.token);
+			// 		sessionStorage.setItem("token", data.token);
+			// 		sessionStorage.setItem("userID", data.user_id);
+			// 		return true;
+			// 	  }
+			// 	} catch (error) {
+			// 	  console.log(error);
+			// 	}
+			//   },
 
 			goPrivate: async ()=> {
 				try{
@@ -97,7 +97,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 			signUp: async (form, navigate) => {
-				const url = "https://zany-broccoli-5gq4xgxp56p934q69-3001.app.github.dev/api/signup";
+				const url = apiUrl+"/api/signup";
 				await fetch(url, {
 					method: "Post",
 					headers: {
@@ -126,7 +126,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			login: (form, navigate) => {
 				const store = getStore();
-				const url = "https://zany-broccoli-5gq4xgxp56p934q69-3001.app.github.dev/api/token";
+				const url = apiUrl+"/api/token";
 				fetch(url, {
 					method: "Post",
 					headers: {
@@ -166,7 +166,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			authenticateUser: (navigate) => {
 				const store = getStore();
 				console.log(store.token);
-				const url = "https://zany-broccoli-5gq4xgxp56p934q69-3001.app.github.dev/api/private"
+				const url = apiUrl+"/api/private"
 				fetch(url, {
 					method: "GET",
 					headers: {

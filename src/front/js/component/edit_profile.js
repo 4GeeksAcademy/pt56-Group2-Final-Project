@@ -26,11 +26,6 @@ export const EditProfile = () => {
                           <input type="text" className="form-control" placeholder="Location" aria-label="Location"/>
                       </div>
                   </div>
-                  <div className="row my-2 justify-content-center">
-                      <div className="col-2">
-                          <button type="button" className="btn btn-success">Submit</button>
-                      </div>
-                  </div>
               </div>
             </div>
             <div class="modal-footer">
