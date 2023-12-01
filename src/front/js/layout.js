@@ -6,6 +6,7 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
+
 // new line
 import Signup from "./pages/Signup.jsx";
 import Login from "./pages/Login.jsx";
@@ -14,6 +15,7 @@ import Profile from "./pages/Profile.jsx";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
+import { LoggedInNavbar } from "./component/logged_in_navbar";
 import { Footer } from "./component/footer";
 
 //create your first component
@@ -28,9 +30,9 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    <Navbar />
+                    <LoggedInNavbar />
                     <Routes>
-                        <Route element={<Home />} path="/" />
+                        <Route element={<Profile />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<Signup />} path="/signup"/>
