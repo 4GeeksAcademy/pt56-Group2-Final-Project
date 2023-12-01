@@ -191,9 +191,18 @@ def create_token():
     access_token = create_access_token(identity=user.id)
     return jsonify({ "token": access_token, "user_id": user.id }) ,200
 
+#private route
 @api.route("/private", methods=["GET"])
 @jwt_required()
 def protected():
-    # Access the identity of the current user with get_jwt_identity
-    current_user = get_jwt_identity()
-    return jsonify(logged_in_as=current_user), 200
+    current_user_id = get_jwt_identity()    
+    user = User.query.get(current_user_id)
+
+    if user == None:
+        response_body = {
+            "msg": "Please login to continue"
+        }
+        return jsonify(response_body)
+    
+    return jsonify({"id": user.id, "username": user.username, "email": user.email, "first_name": user.first_name, "last_name": user.last_name,
+            "permanent_location": user.perm_location }), 200
