@@ -96,6 +96,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ demo: demo });
 			},
+
+			//not working, rejecting fetch, must fix
+			editProfile: (form, user_id, navigate) => {
+				fetch(`${apiUrl}'/edit_user_profile/'${user_id}`, {
+					method: "PUT",
+					headers: {
+						"Content-Type": "application/json"
+					}, 
+					body: JSON.stringify({
+						"first_name": form.first_name,
+						"last_name": form.last_name,
+						"perm_location": form.permanent_location,
+					})
+				})
+				.then(response => {
+					console.log("uplaod response: ", response)
+					console.log("uplaod JSON:", response.json())
+					navigate('/profile')
+				})
+				.catch(error => console.log(error))
+			},
+
 			signUp: async (form, navigate) => {
 				const url = apiUrl+"/api/signup";
 				await fetch(url, {
@@ -103,8 +125,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					headers: {
 						"Content-Type": "application/json",
 					},
-					body: JSON.stringify({						
-						"username": form.username,
+					body: JSON.stringify({
+						"first_name": form.first_name,
+						"last_name": form.last_name,					
 						"email": form.email,
                       	"password": form.password,
 					})					
@@ -117,7 +140,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return false;
 					}
 					await resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
-					navigate('/');														
+					navigate('/login');														
 				})
 				.catch(error => {
 					//error handling
@@ -150,7 +173,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({token: data.token});
 					
 					console.log(store.token);
-					navigate('/');
+					navigate('/profile');
 				})				
 				.catch(error => {
 					//error handling

@@ -21,14 +21,6 @@ const SignupInfo = () => {
                         <h2 >Fill out your profile info!</h2>
                     </div>
                     <div className="col-md-12">
-                        <label htmlFor="FirstName" className="form-label">First Name</label>
-                        <input onChange={onChange} value={formValue.first_name} type="text" className="form-control" placeholder="Enter your first name" id="FirstName" />
-                    </div>                    
-                    <div className="col-md-12">
-                        <label htmlFor="LastName" className="form-label">Last Name</label>
-                        <input onChange={onChange} value={formValue.last_name} type="text" className="form-control" placeholder="Enter your last name" id="LastName" />
-                    </div>
-                    <div className="col-md-12">
                         <label htmlFor="PermLocat" className="form-label">Permanent Location</label>
                         <input onChange={onChange} value={formValue.permanent_location} type="text" className="form-control" placeholder="Enter your permanent location" id="PermLocat" />
                     </div>
@@ -40,10 +32,10 @@ const SignupInfo = () => {
                         <label htmlFor="WishPlaces" className="form-label">Where do you want to go?</label>
                         <input onChange={onChange} value={formValue.wishlist_places} type="text" className="form-control" placeholder="Enter a comma separated list" id="WishPlaces" />
                     </div>
-                    <button type="button" onClick={() => actions.signUp(formValue, navigate)} className="btn btn-primary">Signup</button>                      
+                    <button type="button" onClick={() => actions.finishProfile(formValue, store.user, navigate)} className="btn btn-primary">Signup</button>                      
                 </form>
             </div>
     );
 }
 
-export default Signup
+export default SignupInfo

@@ -21,10 +21,7 @@ const Profile = () => {
         <div className="container text-center">
             {store.user != null ?
                 <div className="container">
-                    <div className="row justify-content-between">
-                        <div className="col-4 m-2">
-                            <h3>@{store.user.username}</h3>
-                        </div>
+                    <div className="row justify-content-end">
                         <div className="col-3 m-2">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">
                                 Edit Profile

@@ -41,7 +41,7 @@ export const LoggedInNavbar = () => {
 					</Link>
                 </div>
                 <div className="ml-auto">
-                    <Link to="/logout">
+                    <Link to="/">
 						<button className="btn btn-outline-danger" onClick={() => actions.logout(navigate)}>Logout</button>
 					</Link>
 				</div>

@@ -5,7 +5,6 @@ db = SQLAlchemy()
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    username = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     first_name = db.Column(db.String(80), unique=False)
     last_name = db.Column(db.String(80), unique=False)
@@ -17,13 +16,12 @@ class User(db.Model):
     #will make array by separating by comma
 
     def __repr__(self):
-        return f'<User {self.username}>'
+        return f'<User {self.email}>'
 
     def serialize(self):
         return {
             "id": self.id,
             "email": self.email,
-            "username": self.username,
             "first_name": self.first_name,
             "last_name": self.last_name,
             "permanent_location": self.perm_location,

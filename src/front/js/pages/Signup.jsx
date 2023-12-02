@@ -4,7 +4,7 @@ import {useNavigate } from "react-router-dom";
 
 const Signup = () => {    
     const { store, actions } = useContext(Context);
-    const [formValue, setFormValue] = useState({username: "", email: "", password: ""});
+    const [formValue, setFormValue] = useState({first_name: "", last_name: "", email: "", password: ""});
     const navigate = useNavigate();
 
     function onChange(e)  {				
@@ -20,9 +20,13 @@ const Signup = () => {
                         <h2 >Signup</h2>
                     </div>
                     <div className="col-md-12">
-                        <label htmlFor="username" className="form-label">Username</label>
-                        <input onChange={onChange} value={formValue.username} type="text" className="form-control" placeholder="Enter username" id="username" />
-                    </div>                    
+                        <label htmlFor="first_name" className="form-label">First Name</label>
+                        <input onChange={onChange} value={formValue.first_name} type="text" className="form-control" placeholder="Enter your first name" id="first_name" />
+                    </div>  
+                    <div className="col-md-12">
+                        <label htmlFor="last_name" className="form-label">Last Name</label>
+                        <input onChange={onChange} value={formValue.last_name} type="text" className="form-control" placeholder="Enter your last name" id="last_name" />
+                    </div>                   
                     <div className="col-md-12">
                         <label htmlFor="email" className="form-label">Email</label>
                         <input onChange={onChange} value={formValue.email} type="email" className="form-control" placeholder="Enter email" id="email" />
