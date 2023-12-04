@@ -95,9 +95,56 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.catch(error => console.log(error))
 			},
 
-			addPlace: async() => {
-		
+			//Future improvement: can still connect this list to data base to the posts that have been posted. 
+			addVisitedPlace: async(user, input_value, navigate) => {
+				const user_id = user.id
+				await fetch(apiUrl+"api/edit_user_profile/"+user_id, {
+					method: "PUT",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						"places_visited": [...user.places_visited, input_value]
+					})
+				})
+				.then(async resp => {
+					console.log(resp.ok); // will be true if the response is successfull
+					console.log(resp.status); // the status code = 200 or code = 400 etc.
+					await resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
+					getActions().authenticateUser(navigate)
+
+				})
+				.catch(error => {
+					//error handling
+					console.log(error);
+				})
 			},
+
+			//Future improvement: can still add function to remove place from this list, or move it to visited place
+			addWishlistPlace: async(user, input_value, navigate) => {
+				const user_id = user.id
+				await fetch(apiUrl+"api/edit_user_profile/"+user_id, {
+					method: "PUT",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						"wishlist_places": [...user.wishlist_places, input_value]
+					})
+				})
+				.then(async resp => {
+					console.log(resp.ok); // will be true if the response is successfull
+					console.log(resp.status); // the status code = 200 or code = 400 etc.
+					await resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
+					getActions().authenticateUser(navigate)
+
+				})
+				.catch(error => {
+					//error handling
+					console.log(error);
+				})
+			},
+
 
 			signUp: async (form, navigate) => {
 				const url = apiUrl+"/api/signup";

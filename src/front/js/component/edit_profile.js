@@ -3,9 +3,9 @@ import { Context } from "../store/appContext";
 import {useNavigate } from "react-router-dom";
 
 
-export const EditProfile = () => {  
+export const EditProfile = ({user}) => {  
   const { store, actions } = useContext(Context);
-  const [formValue, setFormValue] = useState({first_name: "", last_name: "", permanent_location: ""});
+  const [formValue, setFormValue] = useState({first_name: user?.first_name, last_name: user?.last_name, permanent_location: user?.permanent_location});
   const navigate = useNavigate();
 
   function onChange(e)  {				

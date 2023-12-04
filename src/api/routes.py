@@ -189,14 +189,14 @@ def edit_user_profile(user_id):
     updated_first_name = updated_data.get('first_name') 
     updated_last_name= updated_data.get('last_name')
     updated_perm_location= updated_data.get('perm_location')
-    updated_places_visted= updated_data.get('places_visted')
+    updated_places_visted= updated_data.get('places_visited')
     updated_wihlist_places= updated_data.get('wishlist_places')
 
     # Update the user profile
     if updated_first_name: user.first_name = updated_first_name
     if updated_last_name: user.last_name = updated_last_name
     if updated_perm_location: user.perm_location = updated_perm_location
-    if updated_places_visted: user.places_visted = updated_places_visted
+    if updated_places_visted: user.places_visited = updated_places_visted
     if updated_wihlist_places: user.wishlist_places = updated_wihlist_places
     
     db.session.commit()

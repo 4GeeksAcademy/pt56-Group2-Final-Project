@@ -1,12 +1,14 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 import { EditProfile } from "../component/edit_profile";
+import {AddPlace} from "../component/add_place"
 
 //NEED EDIT PROFILE ROUTE TO ADD VISITIED/WISHLIST PLACES AND TO EDIT PROFILE
 const Profile = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
+    const [typeOfList, setTypeOfList ] = useState("")
 
     useEffect(() => {
         function authenticate() {
@@ -45,7 +47,7 @@ const Profile = () => {
                                 {store.user.places_visited? store.user.places_visited.map((place, i) => <li className="list-group-item" key={i}>{place}</li>) : "N/A"}
                             </ul>
                             <div className="row card-footer justify-content-center">
-                                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addPlaceModal">
+                                <button onClick={()=>setTypeOfList("Places I've been")} type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addPlaceModal">
                                     Add New Place
                                 </button>
                             </div>
@@ -58,11 +60,12 @@ const Profile = () => {
                                 {store.user.wishlist_places? store.user.wishlist_places.map((place, i) => <li className="list-group-item" key={i}>{place}</li>) : "N/A"}
                             </ul>
                             <div className="row card-footer justify-content-center">
-                                <button type="button" className="btn btn-info">Add New Place</button>
+                                <button onClick={()=>setTypeOfList("Places I want to go")} type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addPlaceModal">Add New Place</button>
                             </div>
                         </div>
                     </div>
-                    <EditProfile />
+                    <EditProfile user={store.user} />
+                    <AddPlace typeOfList={typeOfList}/>
                 </div>
                 :
                 "back to login"
