@@ -29,29 +29,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			login: async (email, password) => {
-				try {
-				  let response = await fetch(apiUrl + "/api/login", {
-					method: "POST",
-					headers: {
-					  "Content-Type": "application/json",
-					},
-					body: JSON.stringify({ email: email, password: password }),
-				  });
-		
-				  let data = await response.json();
-		
-				  if (data) {
-					console.log(data.token);
-					sessionStorage.setItem("token", data.token);
-					sessionStorage.setItem("userID", data.user_id);
-					return true;
-				  }
-				} catch (error) {
-				  console.log(error);
-				}
-			  },
-
 			goPrivate: async ()=> {
 				try{
 				  let response = await fetch(apiUrl+"/api/private",{
@@ -96,15 +73,89 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ demo: demo });
 			},
+
+			editProfile: (form, user_id, navigate) => {
+				fetch(apiUrl+"api/edit_user_profile/"+user_id, {
+					method: "PUT",
+					headers: {
+						"Content-Type": "application/json"
+					}, 
+					body: JSON.stringify({
+						"first_name": form.first_name,
+						"last_name": form.last_name,
+						"perm_location": form.permanent_location,
+					})
+				})
+				.then(response => {
+					console.log("uplaod response: ", response)
+					console.log("uplaod JSON:", response.json())
+					getActions().authenticateUser(navigate)
+					navigate('/profile')
+				})
+				.catch(error => console.log(error))
+			},
+
+			//Future improvement: can still connect this list to data base to the posts that have been posted. 
+			addVisitedPlace: async(user, input_value, navigate) => {
+				const user_id = user.id
+				await fetch(apiUrl+"api/edit_user_profile/"+user_id, {
+					method: "PUT",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						"places_visited": [...user.places_visited, input_value]
+					})
+				})
+				.then(async resp => {
+					console.log(resp.ok); // will be true if the response is successfull
+					console.log(resp.status); // the status code = 200 or code = 400 etc.
+					await resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
+					getActions().authenticateUser(navigate)
+
+				})
+				.catch(error => {
+					//error handling
+					console.log(error);
+				})
+			},
+
+			//Future improvement: can still add function to remove place from this list, or move it to visited place
+			addWishlistPlace: async(user, input_value, navigate) => {
+				const user_id = user.id
+				await fetch(apiUrl+"api/edit_user_profile/"+user_id, {
+					method: "PUT",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						"wishlist_places": [...user.wishlist_places, input_value]
+					})
+				})
+				.then(async resp => {
+					console.log(resp.ok); // will be true if the response is successfull
+					console.log(resp.status); // the status code = 200 or code = 400 etc.
+					await resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
+					getActions().authenticateUser(navigate)
+
+				})
+				.catch(error => {
+					//error handling
+					console.log(error);
+				})
+			},
+
+
 			signUp: async (form, navigate) => {
-				const url = "https://zany-broccoli-5gq4xgxp56p934q69-3001.app.github.dev/api/signup";
+				const url = apiUrl+"/api/signup";
 				await fetch(url, {
 					method: "Post",
 					headers: {
 						"Content-Type": "application/json",
 					},
-					body: JSON.stringify({						
-						"username": form.username,
+					body: JSON.stringify({
+						"first_name": form.first_name,
+						"last_name": form.last_name,					
 						"email": form.email,
                       	"password": form.password,
 					})					
@@ -117,7 +168,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return false;
 					}
 					await resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
-					navigate('/');														
+					navigate('/login');														
 				})
 				.catch(error => {
 					//error handling
@@ -126,7 +177,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			login: (form, navigate) => {
 				const store = getStore();
-				const url = "https://zany-broccoli-5gq4xgxp56p934q69-3001.app.github.dev/api/token";
+				const url = apiUrl+"/api/token";
 				fetch(url, {
 					method: "Post",
 					headers: {
@@ -150,7 +201,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({token: data.token});
 					
 					console.log(store.token);
-					navigate('/');
+					navigate('/profile');
 				})				
 				.catch(error => {
 					//error handling
@@ -166,7 +217,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			authenticateUser: (navigate) => {
 				const store = getStore();
 				console.log(store.token);
-				const url = "https://zany-broccoli-5gq4xgxp56p934q69-3001.app.github.dev/api/private"
+				const url = apiUrl+"/api/private"
 				fetch(url, {
 					method: "GET",
 					headers: {
