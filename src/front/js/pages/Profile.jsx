@@ -45,7 +45,9 @@ const Profile = () => {
                                 {store.user.places_visited? store.user.places_visited.map((place, i) => <li className="list-group-item" key={i}>{place}</li>) : "N/A"}
                             </ul>
                             <div className="row card-footer justify-content-center">
-                                <button type="button" className="btn btn-info">Add New Place</button>
+                                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addPlaceModal">
+                                    Add New Place
+                                </button>
                             </div>
                         </div>
                         <div className="card m-3 mr-0" style={{ width: "25rem" }}>

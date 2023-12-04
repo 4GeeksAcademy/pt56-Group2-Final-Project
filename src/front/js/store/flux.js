@@ -29,29 +29,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			// login: async (email, password) => {
-			// 	try {
-			// 	  let response = await fetch(apiUrl + "/api/login", {
-			// 		method: "POST",
-			// 		headers: {
-			// 		  "Content-Type": "application/json",
-			// 		},
-			// 		body: JSON.stringify({ email: email, password: password }),
-			// 	  });
-		
-			// 	  let data = await response.json();
-		
-			// 	  if (data) {
-			// 		console.log(data.token);
-			// 		sessionStorage.setItem("token", data.token);
-			// 		sessionStorage.setItem("userID", data.user_id);
-			// 		return true;
-			// 	  }
-			// 	} catch (error) {
-			// 	  console.log(error);
-			// 	}
-			//   },
-
 			goPrivate: async ()=> {
 				try{
 				  let response = await fetch(apiUrl+"/api/private",{
@@ -97,9 +74,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 
-			//not working, rejecting fetch, must fix
 			editProfile: (form, user_id, navigate) => {
-				fetch(`${apiUrl}'/edit_user_profile/'${user_id}`, {
+				fetch(apiUrl+"api/edit_user_profile/"+user_id, {
 					method: "PUT",
 					headers: {
 						"Content-Type": "application/json"
@@ -113,9 +89,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.then(response => {
 					console.log("uplaod response: ", response)
 					console.log("uplaod JSON:", response.json())
+					getActions().authenticateUser(navigate)
 					navigate('/profile')
 				})
 				.catch(error => console.log(error))
+			},
+
+			addPlace: async() => {
+		
 			},
 
 			signUp: async (form, navigate) => {
