@@ -67,24 +67,37 @@ def createUser():
 
 @api.route('/createpost', methods=['POST'])
 def createPost():
-    user_id = request.json.get("user_id")
-    place_name = request.json.get("place_name")
-    stay = request.json.get("stay")
-    food_drinks = request.json.get("food_drinks")
-    activities = request.json.get("activities")
-    transportation = request.json.get("transportation")
-    tips = request.json.get("tips")
+    try:
+        user_id = request.json.get("user_id")
+        place_name = request.json.get("place_name")
+        stay = request.json.get("stay")
+        food_drinks = request.json.get("food_drinks")
+        activities = request.json.get("activities")
+        transportation = request.json.get("transportation")
+        tips = request.json.get("tips")
 
-    post = Post(user_id = user_id, place_name = place_name, stay = stay, food_drinks = food_drinks, activities = activities, transportation = transportation, tips = tips)
+        post = Post(
+            user_id=user_id,
+            place_name=place_name,
+            stay=stay,
+            food_drinks=food_drinks,
+            activities=activities,
+            transportation=transportation,
+            tips=tips
+        )
 
-    db.session.add(post)
-    db.session.commit()
-    
-    response_body = {
-        "msg": "Post successfully added "
-    }
+        db.session.add(post)
+        db.session.commit()
 
-    return jsonify(response_body), 200
+        response_body = {
+            "msg": "Post successfully added ",
+            "post_id": post.id  # Return the ID of the newly created post
+        }
+
+        return jsonify(response_body), 201  # Use 201 Created status code
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
 
 @api.route('/createcomment', methods=['POST'])
 def createComment():

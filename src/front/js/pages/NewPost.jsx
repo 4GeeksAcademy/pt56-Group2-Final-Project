@@ -6,12 +6,12 @@ const NewPost = () => {
   const navigate = useNavigate();
   const { actions } = useContext(Context);
   const [post, setPost] = useState({
-    location: "",
+    place_name: "",
     stay: "",
-    food: "",
+    food_drinks: "",
     activities: "",
     transportation: "",
-    comments: "",
+    tips: "",
     media: null,
   });
 
@@ -34,7 +34,7 @@ const NewPost = () => {
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label>Location:</label>
-              <input type="text" className="form-control" name="location" value={post.location} onChange={handleInputChange} />
+              <input type="text" className="form-control" name="place_name" value={post.place_name} onChange={handleInputChange} />
             </div>
             <div className="form-group">
               <label>Stay:</label>
@@ -42,7 +42,7 @@ const NewPost = () => {
             </div>
             <div className="form-group">
               <label>Food:</label>
-              <input type="text" className="form-control" name="food" value={post.food} onChange={handleInputChange} />
+              <input type="text" className="form-control" name="food_drinks" value={post.food} onChange={handleInputChange} />
             </div>
             <div className="form-group">
               <label>Activities:</label>
@@ -53,8 +53,8 @@ const NewPost = () => {
               <input type="text" className="form-control" name="transportation" value={post.transportation} onChange={handleInputChange} />
             </div>
             <div className="form-group">
-              <label>Comments:</label>
-              <textarea className="form-control" name="comments" value={post.comments} onChange={handleInputChange}></textarea>
+              <label>Tips:</label>
+              <textarea className="form-control" name="tips" value={post.tips} onChange={handleInputChange}></textarea>
             </div>
             <div className="form-group">
               <label>Media:</label>
