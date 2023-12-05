@@ -7,7 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			users: [],
 			posts: [],
 			comments: [],
-			friends:[],
+			friends: null,
 			loggedInAs: []
 		},
 		actions: {
@@ -28,6 +28,45 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error)
 				}
 			},
+
+			getFriends: async () => {
+				try{
+					// fetching data from the backend
+					const resp = await fetch(apiUrl + "/api/friends")
+					const data = await resp.json()
+					setStore({friends: data})
+					// don't forget to return something, that is how the async resolves
+					return data;
+				}catch(error){
+					console.log("Error loading message from backend", error)
+				}
+			},
+
+			addFriend: async (form, navigate) => {
+				const url = apiUrl+"/api/addFriend";
+				await fetch(url, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						"user_id": form.user_id,
+						"friend_id": form.friend_id,					
+					})					
+				})
+				.then(async resp => {
+					console.log(resp.ok); // will be true if the response is successfull
+					console.log(resp.status); // the status code = 200 or code = 400 etc.
+					await resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
+					navigate('/friends');														
+				})
+				.catch(error => {
+					//error handling
+					console.log(error);
+				})
+			},
+
+
 
 			goPrivate: async ()=> {
 				try{

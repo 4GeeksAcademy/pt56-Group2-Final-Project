@@ -173,8 +173,8 @@ def get_all_friends():
     all_relationships_by_id = list(map(lambda x: x.serialize(), all_friend_relationships))
     for relationship in all_relationships_by_id:
         # user = User.query.get(relationship['user_id'])
-        # friend = User.query.get(relationship['friend_id'])
-        friend_pairs.append({"user": relationship['user_id'], "friend": relationship['friend_id']})
+        friend = User.query.get(relationship['friend_id'])
+        friend_pairs.append({"user_id": relationship['user_id'], "friend_id": friend.id, "friend_name": friend.first_name + " " + friend.last_name})
     return friend_pairs
 
 
