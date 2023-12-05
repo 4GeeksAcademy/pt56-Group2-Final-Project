@@ -8,7 +8,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			posts: [],
 			comments: [],
 			friends:[],
-			loggedInAs: []
+			loggedInAs: [],
+			feed: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -250,6 +251,38 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let store = getStore();
 				const token = sessionStorage.getItem("token");
 				if (token && token!= null && token!=undefined) setStore({token: token});
+			},
+			authenticateFeed: (navigate) => {
+				const store = getStore();
+				console.log(store.token);
+				const url = apiUrl + "/api/feed"
+				fetch(url, {
+					method: "GET",
+					headers: {
+						"Authorization": "Bearer " + store.token
+					}
+				})
+				.then(resp => {
+					console.log(resp.ok); // will be true if the response is successfull
+					console.log(resp.status); // the status code = 200 or code = 400 etc.
+					if(!resp.ok){
+						navigate("/login");
+						alert("Please login to continue");
+												
+					}
+					
+					//console.log(resp.text()); // will try return the exact result as string
+					return resp.json();
+				})
+				.then(data => {
+					setStore({feed: data});
+					console.log(data);
+					
+				})
+				.catch(error => {
+					//error handling
+					console.log(error);
+				})
 			}
 		}
 	};
