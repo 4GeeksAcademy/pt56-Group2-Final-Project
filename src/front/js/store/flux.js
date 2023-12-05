@@ -291,7 +291,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				// Ensure the user is logged in
 				if (!store.token) {
 				  alert("Please log in to add a new post.");
-				  navigate("/login"); // Navigate to the login page or any other appropriate route
+				  navigate("/login"); 
 				  return;
 				}
 			  
@@ -307,9 +307,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  
 				  if (response.ok) {
 					alert("Post added successfully!");
-					// Optionally, you can navigate to the feed or other page
 					navigate("/myposts");
-					// Update the posts in the store, if needed
 					getActions().getPosts();
 				  } else {
 					alert("Error adding post. Please try again.");

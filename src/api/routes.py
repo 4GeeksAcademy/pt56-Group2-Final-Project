@@ -91,12 +91,12 @@ def createPost():
 
         response_body = {
             "msg": "Post successfully added ",
-            "post_id": post.id  # Return the ID of the newly created post
+            "post_id": post.id  
         }
 
-        return jsonify(response_body), 201  # Use 201 Created status code
+        return jsonify(response_body), 
     except Exception as e:
-        return jsonify({"error": str(e)}), 400
+        return jsonify({"error": str(e)}),
 
 
 @api.route('/createcomment', methods=['POST'])
