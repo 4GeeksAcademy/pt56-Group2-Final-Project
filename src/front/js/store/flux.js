@@ -283,7 +283,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 					//error handling
 					console.log(error);
 				})
-			}
+			},
+			
+			addNewPost: async (post, navigate) => {
+				const store = getStore();
+		
+				// Ensure the user is logged in
+				if (!store.token) {
+				  alert("Please log in to add a new post.");
+				  navigate("/login");
+				  return;
+				}
+		
+				try {
+				  const response = await fetch(apiUrl + "/api/createpost", {
+					method: "POST",
+					headers: {
+					  "Content-Type": "application/json",
+					  Authorization: `Bearer ${store.token}`,
+					},
+					body: JSON.stringify(post),
+				  });
+		
+				  if (response.ok) {
+					alert("Post added successfully!");
+					// Optionally, you can navigate to the feed or other page
+					navigate("/feed");
+					// Update the posts in the store, if needed
+					getActions().getPosts();
+				  } else {
+					alert("Error adding post. Please try again.");
+				  }
+				} catch (error) {
+				  console.error("Error adding post:", error);
+				}
+			  },
 		}
 	};
 };
