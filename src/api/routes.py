@@ -14,6 +14,7 @@ api = Blueprint('api', __name__)
 CORS(api)
 
 
+
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
 
@@ -36,6 +37,7 @@ def getPosts():
     allPosts = list(map(lambda x: x.serialize(), posts))
 
     return jsonify(allPosts), 200
+
 
 @api.route('/comments', methods=['GET'])
 def getComments():
@@ -65,25 +67,22 @@ def createUser():
     return jsonify(response_body), 200
 
 @api.route('/createpost', methods=['POST'])
-def createPost():
+def create_post():
     user_id = request.json.get("user_id")
-    place_name = request.json.get("place_name")
-    stay = request.json.get("stay")
-    food_drinks = request.json.get("food_drinks")
-    activities = request.json.get("activities")
-    transportation = request.json.get("transportation")
-    tips = request.json.get("tips")
+    location = request.form.get('location')
+    stay = request.form.get("stay")
+    food = request.form.get("food")
+    activities = request.form.get("activities")
+    transportation = request.form.get("transportation")
+    comments = request.form.get("comments")
+    media = request.files.get('media')
 
-    post = Post(user_id = user_id, place_name = place_name, stay = stay, food_drinks = food_drinks, activities = activities, transportation = transportation, tips = tips)
+    post = Post(user_id = user_id, location = location, stay = stay, food = food, activities = activities, transportation = transportation, comments = comments, media = media)
 
     db.session.add(post)
     db.session.commit()
-    
-    response_body = {
-        "msg": "Post successfully added "
-    }
 
-    return jsonify(response_body), 200
+    return jsonify({"msg": "Post successfully added"}), 200
 
 @api.route('/createcomment', methods=['POST'])
 def createComment():

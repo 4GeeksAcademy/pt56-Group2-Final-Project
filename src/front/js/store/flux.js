@@ -29,7 +29,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({ message: data.message })
 					// don't forget to return something, that is how the async resolves
 					return data;
-				}catch(error){
+				}catch(error)
+				{
 					console.log("Error loading message from backend", error)
 				}
 			},

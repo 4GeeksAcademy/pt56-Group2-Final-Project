@@ -18,11 +18,11 @@
     "default": {
         "alembic": {
             "hashes": [
-                "sha256:47d52e3dfb03666ed945becb723d6482e52190917fdb47071440cfdba05d92cb",
-                "sha256:bca5877e9678b454706347bc10b97cb7d67f300320fa5c3a94423e8266e2823f"
+                "sha256:a23974ea301c3ee52705db809c7413cecd165290c6679b9998dd6c74342ca23a",
+                "sha256:ab4b3b94d2e1e5f81e34be8a9b7b7575fc9dd5398fccb0bef351ec9b14872623"
             ],
-            "markers": "python_version >= '3.7'",
-            "version": "==1.12.1"
+            "markers": "python_version >= '3.8'",
+            "version": "==1.13.0"
         },
         "blinker": {
             "hashes": [
@@ -50,10 +50,10 @@
         },
         "cloudinary": {
             "hashes": [
-                "sha256:88571d8ed3366797bdbaec87e452471f7e09c1f767f83390efca326dd1cbcc8f"
+                "sha256:5f6441a4dd839951032508d88068bd705eee9d58802c321cddc84e0a67ea202b"
             ],
             "index": "pypi",
-            "version": "==1.36.0"
+            "version": "==1.37.0"
         },
         "flask": {
             "hashes": [
