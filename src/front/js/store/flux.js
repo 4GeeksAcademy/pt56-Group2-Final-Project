@@ -287,14 +287,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 			addNewPost: async (post, navigate) => {
 				const store = getStore();
-		
+			  
 				// Ensure the user is logged in
 				if (!store.token) {
 				  alert("Please log in to add a new post.");
-				  navigate("/login");
+				  navigate("/login"); // Navigate to the login page or any other appropriate route
 				  return;
 				}
-		
+			  
 				try {
 				  const response = await fetch(apiUrl + "/api/createpost", {
 					method: "POST",
@@ -304,11 +304,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					},
 					body: JSON.stringify(post),
 				  });
-		
+			  
 				  if (response.ok) {
 					alert("Post added successfully!");
 					// Optionally, you can navigate to the feed or other page
-					navigate("/feed");
+					navigate("/myposts");
 					// Update the posts in the store, if needed
 					getActions().getPosts();
 				  } else {
@@ -318,6 +318,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  console.error("Error adding post:", error);
 				}
 			  },
+
+			  getPosts: async () => {
+				try {
+				  const response = await fetch(apiUrl + "/api/posts");
+				  if (response.ok) {
+					const data = await response.json();
+					setStore({ posts: data });
+				  } else {
+					console.error("Error fetching posts:", response.statusText);
+				  }
+				} catch (error) {
+				  console.error("Error fetching posts:", error);
+				}
+			  },
+			
+			
+			  
 		}
 	};
 };
