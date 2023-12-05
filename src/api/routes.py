@@ -46,15 +46,16 @@ def getComments():
 
 @api.route('/signup', methods=['POST'])
 def createUser():
-    username = request.json.get("username")
+    first_name = request.json.get("first_name")
+    last_name = request.json.get("last_name")
     password = request.json.get("password")
     email = request.json.get("email")
 
     user = User.query.filter_by(email=email).first()
     if user != None:
-        return jsonify({"msg": "username exists"}), 401
+        return jsonify({"msg": "email exists"}), 401
     
-    user = User(username=username, password=password, email = email)
+    user = User(first_name=first_name, last_name=last_name ,password=password, email = email)
     db.session.add(user)
     db.session.commit()
     
@@ -164,24 +165,52 @@ def deletePost():
 
     return jsonify(response_body), 200
 
-
+#get all friend pairs
 @api.route('/friends', methods=['GET'])
 def get_all_friends():
     all_friend_relationships = Friends.query.all()
     friend_pairs = []
     all_relationships_by_id = list(map(lambda x: x.serialize(), all_friend_relationships))
     for relationship in all_relationships_by_id:
-        user = User.query.get(relationship['user_id'])
-        friend = User.query.get(relationship['friend_id'])
-        friend_pairs.append({user.username:friend.username})
+        # user = User.query.get(relationship['user_id'])
+        # friend = User.query.get(relationship['friend_id'])
+        friend_pairs.append({"user": relationship['user_id'], "friend": relationship['friend_id']})
     return friend_pairs
+
+
+#edit user profile
+@api.route('/edit_user_profile/<int:user_id>', methods=['PUT'])
+def edit_user_profile(user_id):
+    user = User.query.get(user_id)
+    if not user: return jsonify({'message': 'User not found'}), 404
+
+    # Get updated user data
+    updated_data = request.json
+    updated_first_name = updated_data.get('first_name') 
+    updated_last_name= updated_data.get('last_name')
+    updated_perm_location= updated_data.get('perm_location')
+    updated_places_visted= updated_data.get('places_visited')
+    updated_wihlist_places= updated_data.get('wishlist_places')
+
+    # Update the user profile
+    if updated_first_name: user.first_name = updated_first_name
+    if updated_last_name: user.last_name = updated_last_name
+    if updated_perm_location: user.perm_location = updated_perm_location
+    if updated_places_visted: user.places_visited = updated_places_visted
+    if updated_wihlist_places: user.wishlist_places = updated_wihlist_places
+    
+    db.session.commit()
+
+    return jsonify({'message': 'user profile updated successfully'}), 200 
+
+
 
 #login
 @api.route('/token', methods=['POST'])
 def create_token():
     email = request.json.get("email")
     password = request.json.get("password")
-    # Query your database for username and password
+    # Query your database for email and password
     user = User.query.filter_by(email=email, password=password).first()
     if user is None:
         # the user was not found on the database
@@ -204,5 +233,5 @@ def protected():
         }
         return jsonify(response_body)
     
-    return jsonify({"id": user.id, "username": user.username, "email": user.email, "first_name": user.first_name, "last_name": user.last_name,
-            "permanent_location": user.perm_location }), 200
+    return jsonify({"id": user.id, "email": user.email, "first_name": user.first_name, "last_name": user.last_name,
+            "permanent_location": user.perm_location, "places_visited": user.places_visited, "wishlist_places": user.wishlist_places }), 200
