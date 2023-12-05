@@ -1,7 +1,9 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 
 const NewPost = () => {
+  const navigate = useNavigate();
   const { actions } = useContext(Context);
   const [post, setPost] = useState({
     location: "",
@@ -21,7 +23,7 @@ const NewPost = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    actions.addNewPost(post);
+    actions.addNewPost(post, navigate);
   };
 
   return (
