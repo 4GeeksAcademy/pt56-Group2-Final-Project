@@ -332,9 +332,37 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  console.error("Error fetching posts:", error);
 				}
 			  },
-			
-			
-			  
+			  addFriend: (form, navigate) => {
+				const store = getStore();
+				const url = apiUrl+"/api/addfriend";
+				fetch(url, {
+					method: "Post",
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": "Bearer " + store.token
+					},
+					body: JSON.stringify({						
+						"email": form.email,
+						"first_name": form.first_name,
+						"last_name": form.last_name,
+					})					
+				})
+				.then(async resp => {
+					console.log(resp.ok); // will be true if the response is successfull
+					console.log(resp.status); // the status code = 200 or code = 400 etc.
+					if(!resp.ok){
+						alert("User doesn't exist");
+						return false;						
+					}
+					//console.log(resp.text()); // will try return the exact result as string
+					await resp.json();					
+					navigate('/addfriend');
+				})				
+				.catch(error => {
+					//error handling
+					console.log(error);
+				})
+			}								  
 		}
 	};
 };

@@ -117,11 +117,23 @@ def createComment():
     return jsonify(response_body), 200
 
 @api.route('/addfriend', methods=['POST'])
-def addFriend(): 
-    user_id = request.json.get("user_id")
-    friend_id = request.json.get("friend_id")
+@jwt_required()
+def addFriend():
+    current_user_id = get_jwt_identity() 
+    #user_id = request.json.get("user_id")
+    #friend_id = request.json.get("friend_id")
 
-    friend = Friends(user_id = user_id, friend_id = friend_id)
+    #friend = Friends(user_id = user_id, friend_id = friend_id)
+
+    email = request.json.get("email")
+    first_name = request.json.get("first_name")
+    last_name = request.json.get("last_name")
+
+    user = User.query.filter_by(email=email, first_name=first_name, last_name=last_name).first()
+    if user == None:
+        return jsonify({"msg": "user doesn't exist"}), 401
+
+    friend = Friends(user_id = current_user_id, friend_id = user.id)
 
     db.session.add(friend)
     db.session.commit()
