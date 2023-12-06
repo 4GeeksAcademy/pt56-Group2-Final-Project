@@ -31,8 +31,10 @@ def getUsers():
     return jsonify(allUsers), 200
 
 @api.route('/posts', methods=['GET'])
+@jwt_required()
 def getPosts():
-    posts = Post.query.all()
+    current_user_id = get_jwt_identity() 
+    posts = Post.query.filter_by(user_id = current_user_id)
     allPosts = list(map(lambda x: x.serialize(), posts))
 
     return jsonify(allPosts), 200
@@ -178,18 +180,18 @@ def deletePost():
 
     return jsonify(response_body), 200
 
-#get all friend pairs
+#get user's friends
 @api.route('/friends', methods=['GET'])
-def get_all_friends():
-    all_friend_relationships = Friends.query.all()
-    friend_pairs = []
-    all_relationships_by_id = list(map(lambda x: x.serialize(), all_friend_relationships))
-    for relationship in all_relationships_by_id:
-        user = User.query.get(relationship['user_id'])
-        friend = User.query.get(relationship['friend_id'])
-        friend_pairs.append({user.email:friend.email})
-    return friend_pairs
-
+@jwt_required()
+def getFriends():
+    current_user_id = get_jwt_identity()     
+    friends_by_id = Friends.query.filter_by(user_id = current_user_id)
+    allFriends = list(map(lambda x :x.serialize(), friends_by_id))
+    friends = []
+    for pair in allFriends:
+        friend = User.query.get(pair['friend_id'])
+        friends.append(friend.first_name + " " + friend.last_name)
+    return jsonify(friends), 200
 
 #edit user profile
 @api.route('/edit_user_profile/<int:user_id>', methods=['PUT'])
@@ -215,7 +217,6 @@ def edit_user_profile(user_id):
     db.session.commit()
 
     return jsonify({'message': 'user profile updated successfully'}), 200 
-
 
 
 #login
@@ -271,4 +272,48 @@ def feed():
         
 
     return jsonify(feed), 200
+
+@api.route("/editprofile", methods=['PUT'])
+@jwt_required()
+def editProfile():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    updated_data = request.json
+    updated_first_name = updated_data.get('first_name') 
+    updated_last_name = updated_data.get('last_name')
+    updated_perm_location = updated_data.get('perm_location')
+    # updated_places_visited = updated_data.get('places_visited')
+    # updated_wishlist_places = updated_data.get('wishlist_places')
+
+    if updated_first_name: user.first_name = updated_first_name
+    if updated_last_name: user.last_name = updated_last_name
+    if updated_perm_location: user.perm_location = updated_perm_location
+    # if updated_places_visited: user.places_visited = updated_places_visited
+    # if updated_wishlist_places: user.wishlist_places = updated_wishlist_places
+    
+    db.session.commit()
+
+    return jsonify({"msg": "profile edited"}), 200
+
+@api.route("/addplaceprofile", methods=['PUT'])
+@jwt_required()
+def addPlaces():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    new_place = request.json
+    new_place_visited =  new_place.get('places_visited')
+    new_wishlist_place = new_place.get('wishlist_places')
+    
+    if new_place_visited:
+        if user.places_visited: user.places_visited = ",".join(user.places_visited) + "," + str(new_place_visited)
+        else: user.places_visited = str(new_place_visited + ",")
+    if new_wishlist_place:
+        if user.wishlist_places: user.wishlist_places.append(new_wishlist_place)
+        else: user.wishlist_places = new_wishlist_place
+
+    db.session.commit()
+
+    return jsonify({"msg": "new place added"}), 200
+
+
 

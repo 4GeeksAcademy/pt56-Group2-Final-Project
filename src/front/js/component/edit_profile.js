@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useState, useEffect} from "react";
 import { Context } from "../store/appContext";
 import {useNavigate } from "react-router-dom";
 
@@ -7,6 +7,7 @@ export const EditProfile = ({user}) => {
   const { store, actions } = useContext(Context);
   const [formValue, setFormValue] = useState({first_name: user?.first_name, last_name: user?.last_name, permanent_location: user?.permanent_location});
   const navigate = useNavigate();
+
 
   function onChange(e)  {				
     const id = e.target.id;
@@ -41,7 +42,7 @@ export const EditProfile = ({user}) => {
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" onClick={() => actions.editProfile(formValue, store.user.id ,navigate)} >Save changes</button>
+              <button type="button" class="btn btn-primary" onClick={() => actions.authenticateEditProfile(formValue, navigate)} >Save changes</button>
             </div>
           </div>
         </div>

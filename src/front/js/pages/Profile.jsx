@@ -68,7 +68,7 @@ const Profile = () => {
                     <AddPlace typeOfList={typeOfList}/>
                 </div>
                 :
-                "back to login"
+                "profile loading..."
             }
         </div>
     );

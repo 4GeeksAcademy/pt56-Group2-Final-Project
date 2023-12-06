@@ -30,6 +30,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			//do we use this function:
 			goPrivate: async ()=> {
 				try{
 				  let response = await fetch(apiUrl+"/api/private",{
@@ -47,7 +48,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				  
 				},
-
+			//do we use this function:
 			getMessage: async () => {
 				try{
 					// fetching data from the backend
@@ -60,6 +61,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error)
 				}
 			},
+			//do we use this function:
 			changeColor: (index, color) => {
 				//get the store
 				const store = getStore();
@@ -75,28 +77,46 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 
-			editProfile: (form, user_id, navigate) => {
-				fetch(apiUrl+"api/edit_user_profile/"+user_id, {
+			authenticateEditProfile: (form, navigate) => {
+				const store = getStore();
+				const url = apiUrl + "/api/editprofile"
+				fetch(url, {
 					method: "PUT",
 					headers: {
-						"Content-Type": "application/json"
-					}, 
+						"Content-Type": "application/json",
+						"Authorization": "Bearer " + store.token
+					},
 					body: JSON.stringify({
 						"first_name": form.first_name,
 						"last_name": form.last_name,
 						"perm_location": form.permanent_location,
 					})
 				})
-				.then(response => {
-					console.log("uplaod response: ", response)
-					console.log("uplaod JSON:", response.json())
-					getActions().authenticateUser(navigate)
-					navigate('/profile')
+				.then(resp => {
+					console.log(resp.ok); // will be true if the response is successfull
+					console.log(resp.status); // the status code = 200 or code = 400 etc.
+					if(!resp.ok){
+						navigate("/login");
+						alert("Please login to continue");
+												
+					}
+					
+					//console.log(resp.text()); // will try return the exact result as string
+					return resp.json();
 				})
-				.catch(error => console.log(error))
+				.then(data => {
+					getActions().authenticateUser(navigate)
+					console.log(data);
+					
+				})
+				.catch(error => {
+					//error handling
+					console.log(error);
+				})
 			},
 
 			//Future improvement: can still connect this list to data base to the posts that have been posted. 
+			//not really working with dev
 			addVisitedPlace: async(user, input_value, navigate) => {
 				const user_id = user.id
 				await fetch(apiUrl+"api/edit_user_profile/"+user_id, {
@@ -122,6 +142,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			//Future improvement: can still add function to remove place from this list, or move it to visited place
+			//not really working with dev
 			addWishlistPlace: async(user, input_value, navigate) => {
 				const user_id = user.id
 				await fetch(apiUrl+"api/edit_user_profile/"+user_id, {
@@ -145,7 +166,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error);
 				})
 			},
-
 
 			signUp: async (form, navigate) => {
 				const url = apiUrl+"/api/signup";
@@ -176,6 +196,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error);
 				})
 			},
+
 			login: (form, navigate) => {
 				const store = getStore();
 				const url = apiUrl+"/api/token";
@@ -209,12 +230,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error);
 				})
 			},
+
 			logout: (navigate) => {			
 				setStore({user:null});
 				sessionStorage.removeItem("token");
 				setStore({token: null});
 				navigate("/");
 			},
+
 			authenticateUser: (navigate) => {
 				const store = getStore();
 				console.log(store.token);
@@ -247,11 +270,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error);
 				})
 			},
+
 			tokenFromStore: () => {
 				let store = getStore();
 				const token = sessionStorage.getItem("token");
 				if (token && token!= null && token!=undefined) setStore({token: token});
 			},
+
 			authenticateFeed: (navigate) => {
 				const store = getStore();
 				console.log(store.token);
@@ -319,19 +344,82 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			  },
 
-			  getPosts: async () => {
+			getPosts: async () => {
 				try {
-				  const response = await fetch(apiUrl + "/api/posts");
-				  if (response.ok) {
+					const response = await fetch(apiUrl + "/api/posts");
+					if (response.ok) {
 					const data = await response.json();
 					setStore({ posts: data });
-				  } else {
+					} else {
 					console.error("Error fetching posts:", response.statusText);
-				  }
+					}
 				} catch (error) {
-				  console.error("Error fetching posts:", error);
+					console.error("Error fetching posts:", error);
 				}
-			  },
+			},
+
+			authenticateFriends: (navigate) => {
+				const store = getStore();
+				console.log(store.token);
+				const url = apiUrl + "/api/friends"
+				fetch(url, {
+					method: "GET",
+					headers: {
+						"Authorization": "Bearer " + store.token
+					}
+				})
+				.then(resp => {
+					console.log(resp.ok); // will be true if the response is successfull
+					console.log(resp.status); // the status code = 200 or code = 400 etc.
+					if(!resp.ok){
+						navigate("/login");
+						alert("Please login to continue");
+												
+					}
+					
+					//console.log(resp.text()); // will try return the exact result as string
+					return resp.json();
+				})
+				.then(data => {
+					setStore({friends: data});					
+				})
+				.catch(error => {
+					//error handling
+					console.log(error);
+				})
+			},
+			authenticatePosts: (navigate) => {
+				const store = getStore();
+				console.log(store.token);
+				const url = apiUrl + "/api/posts"
+				fetch(url, {
+					method: "GET",
+					headers: {
+						"Authorization": "Bearer " + store.token
+					}
+				})
+				.then(resp => {
+					console.log(resp.ok); // will be true if the response is successfull
+					console.log(resp.status); // the status code = 200 or code = 400 etc.
+					if(!resp.ok){
+						navigate("/login");
+						alert("Please login to continue");
+												
+					}
+					
+					//console.log(resp.text()); // will try return the exact result as string
+					return resp.json();
+				})
+				.then(data => {
+					setStore({posts: data});
+					console.log("DATA:", data);
+					
+				})
+				.catch(error => {
+					//error handling
+					console.log(error);
+				})
+			},
 			
 			
 			  

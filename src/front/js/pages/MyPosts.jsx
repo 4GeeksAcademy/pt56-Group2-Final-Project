@@ -1,25 +1,32 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 
 const MyPosts = () => {
   const { store, actions } = useContext(Context);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
+  // useEffect(() => {
+  //   // Fetch posts when the component mounts
+  //   actions.getPosts().then(() => {
+  //     setIsLoading(false);
+  //   });
+  // }, [actions]);
+
+  // console.log("Posts in store:", store.posts);
   useEffect(() => {
-    // Fetch posts when the component mounts
-    actions.getPosts().then(() => {
-      setIsLoading(false);
-    });
-  }, [actions]);
-
-  console.log("Posts in store:", store.posts);
+    function authenticate() {
+        actions.authenticatePosts(navigate);
+        console.log("POSTS:", store.friends)
+    }
+    setTimeout(() => {
+        authenticate() }, 500)        
+  }, [])
 
   return (
     <div className="container mt-4">
       <h1 className="text-center mb-4">My Posts</h1>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
         <div className="row justify-content-center">
           <div className="col-md-6">
             <ul className="list-group">
@@ -40,7 +47,6 @@ const MyPosts = () => {
             </ul>
           </div>
         </div>
-      )}
     </div>
   );
 };
