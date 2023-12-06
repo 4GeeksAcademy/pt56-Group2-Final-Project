@@ -5,6 +5,7 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Post, Comment, Friends
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
+import requests
 
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
@@ -67,37 +68,68 @@ def createUser():
 
 @api.route('/createpost', methods=['POST'])
 def createPost():
-    try:
-        user_id = request.json.get("user_id")
-        place_name = request.json.get("place_name")
-        stay = request.json.get("stay")
-        food_drinks = request.json.get("food_drinks")
-        activities = request.json.get("activities")
-        transportation = request.json.get("transportation")
-        tips = request.json.get("tips")
+    # try:
+    user_id = request.json.get("user_id")
+    place_name = request.json.get("place_name")
+    stay = request.json.get("stay")
+    food_drinks = request.json.get("food_drinks")
+    activities = request.json.get("activities")
+    transportation = request.json.get("transportation")
+    tips = request.json.get("tips")
 
-        post = Post(
-            user_id=user_id,
-            place_name=place_name,
-            stay=stay,
-            food_drinks=food_drinks,
-            activities=activities,
-            transportation=transportation,
-            tips=tips
-        )
+    # Check if the request contains a file
+    # if 'media' in request.files:
+        # Fetch media from API
+    print("request.json",request.json)
+    media=request.json.get('media')
+    imgbb_response = uploadMediaToImgBB(media)
 
-        db.session.add(post)
-        db.session.commit()
+    # Save URL in the db
+    post = Post(
+        user_id=user_id,
+        place_name=place_name,
+        stay=stay,
+        food_drinks=food_drinks,
+        activities=activities,
+        transportation=transportation,
+        tips=tips,
+        media=imgbb_response.get('url')  
+    )
+    # else:
+    #     post = Post(
+    #         user_id=user_id,
+    #         place_name=place_name,
+    #         stay=stay,
+    #         food_drinks=food_drinks,
+    #         activities=activities,
+    #         transportation=transportation,
+    #         tips=tips
+    #     )
 
-        response_body = {
-            "msg": "Post successfully added ",
-            "post_id": post.id  # Return the ID of the newly created post
-        }
+    db.session.add(post)
+    db.session.commit()
 
-        return jsonify(response_body), 201  # Use 201 Created status code
-    except Exception as e:
-        return jsonify({"error": str(e)}), 400
+    response_body = {
+        "msg": "Post successfully added",
+        "post_id": post.id  
+    }
 
+    return jsonify(response_body), 201  
+
+    # except Exception as e:
+    #     return jsonify({"error": str(e)}), 400
+
+def uploadMediaToImgBB(media):
+    # Upload media to ImgBB and get the URL
+    imgbb_url = "https://api.imgbb.com/1/upload?key=a4164c53da6c55c20d8544a12de89add"
+    print(media)
+    imgbb_response = requests.post(imgbb_url, files={'image': media})
+
+    if imgbb_response.ok:
+        return imgbb_response.json().get('data')
+    else:
+        print(imgbb_response.json())
+        raise Exception("Error uploading media to ImgBB")
 
 @api.route('/createcomment', methods=['POST'])
 def createComment():

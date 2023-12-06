@@ -1,6 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
+
 
 const NewPost = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const NewPost = () => {
     activities: "",
     transportation: "",
     tips: "",
-    media: null,
+    // media: null,
   });
 
   const handleInputChange = (e) => {
@@ -21,10 +22,53 @@ const NewPost = () => {
     setPost({ ...post, [name]: inputValue });
   };
 
-  const handleSubmit = (e) => {
+  const ref = useRef(null);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    actions.addNewPost(post, navigate);
+    const updatedPost = { ...post, media: ref.current.files[0] };
+    console.log(updatedPost)
+
+    actions.addNewPost(updatedPost, navigate);
+
+//    y {
+//       if (post.media) {
+//         // const mediaUrl = await uploadMediaToImgBB(post.media);
+//  tr
+//         const updatedPost = { ...post, media: ref.current.files[0] };
+//         console.log(updatedPost)
+
+//         actions.addNewPost(updatedPost, navigate);
+//       } else {
+//         actions.addNewPost(post, navigate);
+//       }
+//     } catch (error) {
+//       console.error("Error during submission:", error);
+//     }
   };
+
+  // const uploadMediaToImgBB = async () => {
+  //   const formData = new FormData();
+  //   formData.append("image", post.media);
+
+  //   try {
+  //     const response = await fetch("https://api.imgbb.com/1/upload?key=a4164c53da6c55c20d8544a12de89add", {
+  //       method: "POST",
+  //       body: formData,
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error("Error uploading media to ImgBB");
+  //     }
+
+  //     const responseData = await response.json();
+  //     return responseData.data.url; 
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //     throw error;
+  //   }
+  // };
+
 
   return (
     <div className="container mt-4">
@@ -58,7 +102,7 @@ const NewPost = () => {
             </div>
             <div className="form-group">
               <label>Media:</label>
-              <input type="file" className="form-control-file" name="media" accept="image/*" onChange={handleInputChange} />
+              <input type="file" className="form-control-file" name="media" accept="image/*" ref={ref} />
             </div>
             <button type="submit" className="btn btn-primary">Submit</button>
           </form>
