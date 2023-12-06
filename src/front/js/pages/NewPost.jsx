@@ -27,24 +27,28 @@ const NewPost = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const updatedPost = { ...post, media: ref.current.files[0] };
-    console.log(updatedPost)
+    let formData = new FormData();
 
-    actions.addNewPost(updatedPost, navigate);
+    for (let key in updatedPost) {
+      formData.append(key, updatedPost[key]);
+    }
 
-//    y {
-//       if (post.media) {
-//         // const mediaUrl = await uploadMediaToImgBB(post.media);
-//  tr
-//         const updatedPost = { ...post, media: ref.current.files[0] };
-//         console.log(updatedPost)
+    actions.addNewPost(formData, navigate);
 
-//         actions.addNewPost(updatedPost, navigate);
-//       } else {
-//         actions.addNewPost(post, navigate);
-//       }
-//     } catch (error) {
-//       console.error("Error during submission:", error);
-//     }
+    //    y {
+    //       if (post.media) {
+    //         // const mediaUrl = await uploadMediaToImgBB(post.media);
+    //  tr
+    //         const updatedPost = { ...post, media: ref.current.files[0] };
+    //         console.log(updatedPost)
+
+    //         actions.addNewPost(updatedPost, navigate);
+    //       } else {
+    //         actions.addNewPost(post, navigate);
+    //       }
+    //     } catch (error) {
+    //       console.error("Error during submission:", error);
+    //     }
   };
 
   // const uploadMediaToImgBB = async () => {

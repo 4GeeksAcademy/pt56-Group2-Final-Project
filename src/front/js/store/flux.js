@@ -294,15 +294,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  navigate("/login"); // Navigate to the login page or any other appropriate route
 				  return;
 				}
+
+				for (let key of post.keys()) {
+				  console.log(key, post.get(key));
+				}
 			  
 				try {
 				  const response = await fetch(apiUrl + "/api/createpost", {
 					method: "POST",
 					headers: {
-					  "Content-Type": "application/json",
 					  Authorization: `Bearer ${store.token}`,
 					},
-					body: JSON.stringify(post),
+					body: post,
 				  });
 			  
 				  if (response.ok) {
