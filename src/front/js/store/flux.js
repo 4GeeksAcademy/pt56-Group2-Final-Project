@@ -291,23 +291,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 				// Ensure the user is logged in
 				if (!store.token) {
 				  alert("Please log in to add a new post.");
-				  navigate("/login"); // Navigate to the login page or any other appropriate route
+				  navigate("/login"); // Navigate to the login page
 				  return;
+				}
+
+				for (let key of post.keys()) {
+				  console.log(key, post.get(key));
 				}
 			  
 				try {
 				  const response = await fetch(apiUrl + "/api/createpost", {
 					method: "POST",
 					headers: {
-					  "Content-Type": "application/json",
 					  Authorization: `Bearer ${store.token}`,
 					},
-					body: JSON.stringify(post),
+					body: post,
 				  });
 			  
 				  if (response.ok) {
 					alert("Post added successfully!");
-					// Optionally, you can navigate to the feed or other page
 					navigate("/myposts");
 					// Update the posts in the store, if needed
 					getActions().getPosts();

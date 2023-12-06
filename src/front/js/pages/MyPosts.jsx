@@ -6,11 +6,10 @@ const MyPosts = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch posts when the component mounts
     actions.getPosts().then(() => {
       setIsLoading(false);
     });
-  }, [actions]);
+  }, []);
 
   console.log("Posts in store:", store.posts);
 
@@ -31,9 +30,8 @@ const MyPosts = () => {
                   <p>Activities: {post.activities}</p>
                   <p>Transportation: {post.transportation}</p>
                   <p>Tips: {post.tips}</p>
-                  {/* Add any additional fields you want to display */}
                   {post.media && (
-                    <img src={post.media} alt="Post Media" className="img-fluid" />
+                    <img src={post.media} alt="media" className="img-fluid" />
                   )}
                 </li>
               ))}
