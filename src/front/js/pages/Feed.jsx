@@ -22,7 +22,7 @@ const Feed = () => {
                 store.feed.map((item,index) => {
                     return(
                         <div key={index} className="mb-5">
-                            <h2>Username: {item.user_id}</h2>
+                            <h2>User ID: {item.user_id}</h2>
                             <h2>Stay: {item.stay}</h2>
                             <h2>Food/Drinks: {item.food_drinks}</h2>
                             <h2>Activities: {item.activities}</h2>
