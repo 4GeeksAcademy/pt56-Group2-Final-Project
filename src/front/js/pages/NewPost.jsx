@@ -13,7 +13,6 @@ const NewPost = () => {
     activities: "",
     transportation: "",
     tips: "",
-    // media: null,
   });
 
   const handleInputChange = (e) => {
@@ -35,43 +34,9 @@ const NewPost = () => {
 
     actions.addNewPost(formData, navigate);
 
-    //    y {
-    //       if (post.media) {
-    //         // const mediaUrl = await uploadMediaToImgBB(post.media);
-    //  tr
-    //         const updatedPost = { ...post, media: ref.current.files[0] };
-    //         console.log(updatedPost)
 
-    //         actions.addNewPost(updatedPost, navigate);
-    //       } else {
-    //         actions.addNewPost(post, navigate);
-    //       }
-    //     } catch (error) {
-    //       console.error("Error during submission:", error);
-    //     }
   };
 
-  // const uploadMediaToImgBB = async () => {
-  //   const formData = new FormData();
-  //   formData.append("image", post.media);
-
-  //   try {
-  //     const response = await fetch("https://api.imgbb.com/1/upload?key=a4164c53da6c55c20d8544a12de89add", {
-  //       method: "POST",
-  //       body: formData,
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error("Error uploading media to ImgBB");
-  //     }
-
-  //     const responseData = await response.json();
-  //     return responseData.data.url; 
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //     throw error;
-  //   }
-  // };
 
 
   return (

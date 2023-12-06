@@ -91,16 +91,7 @@ def createPost():
         tips=tips,
         media=imgbb_response.get('url')  
     )
-    # else:
-    #     post = Post(
-    #         user_id=user_id,
-    #         place_name=place_name,
-    #         stay=stay,
-    #         food_drinks=food_drinks,
-    #         activities=activities,
-    #         transportation=transportation,
-    #         tips=tips
-    #     )
+
 
     db.session.add(post)
     db.session.commit()
@@ -112,21 +103,14 @@ def createPost():
 
     return jsonify(response_body), 201  
 
-    # except Exception as e:
-    #     return jsonify({"error": str(e)}), 400
+
 
 def uploadMediaToImgBB(media):
     # Upload media to ImgBB and get the URL
     imgbb_url = "https://api.imgbb.com/1/upload?key=a4164c53da6c55c20d8544a12de89add"
-    print("media:", media)
     imgbb_response = requests.post(imgbb_url, files={'image': media})
-    print("resp:", imgbb_response.text)
     return imgbb_response.json().get('data')
 
-    # if imgbb_response.ok:
-    # else:
-    #     print(imgbb_response.json())
-    #     raise Exception("Error uploading media to ImgBB")
 
 @api.route('/createcomment', methods=['POST'])
 def createComment():
