@@ -69,19 +69,15 @@ def createUser():
 @api.route('/createpost', methods=['POST'])
 def createPost():
     # try:
-    user_id = request.json.get("user_id")
-    place_name = request.json.get("place_name")
-    stay = request.json.get("stay")
-    food_drinks = request.json.get("food_drinks")
-    activities = request.json.get("activities")
-    transportation = request.json.get("transportation")
-    tips = request.json.get("tips")
-
-    # Check if the request contains a file
-    # if 'media' in request.files:
-        # Fetch media from API
-    print("request.json",request.json)
-    media=request.json.get('media')
+    user_id = request.form.get("user_id")
+    place_name = request.form.get("place_name")
+    stay = request.form.get("stay")
+    food_drinks = request.form.get("food_drinks")
+    activities = request.form.get("activities")
+    transportation = request.form.get("transportation")
+    tips = request.form.get("tips")
+    media=request.files.get('media')
+    
     imgbb_response = uploadMediaToImgBB(media)
 
     # Save URL in the db
@@ -122,14 +118,15 @@ def createPost():
 def uploadMediaToImgBB(media):
     # Upload media to ImgBB and get the URL
     imgbb_url = "https://api.imgbb.com/1/upload?key=a4164c53da6c55c20d8544a12de89add"
-    print(media)
+    print("media:", media)
     imgbb_response = requests.post(imgbb_url, files={'image': media})
+    print("resp:", imgbb_response.text)
+    return imgbb_response.json().get('data')
 
-    if imgbb_response.ok:
-        return imgbb_response.json().get('data')
-    else:
-        print(imgbb_response.json())
-        raise Exception("Error uploading media to ImgBB")
+    # if imgbb_response.ok:
+    # else:
+    #     print(imgbb_response.json())
+    #     raise Exception("Error uploading media to ImgBB")
 
 @api.route('/createcomment', methods=['POST'])
 def createComment():
