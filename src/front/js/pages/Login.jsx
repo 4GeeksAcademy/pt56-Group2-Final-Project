@@ -1,5 +1,5 @@
 import React, {useContext, useState} from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 const Login = () => {
@@ -27,7 +27,10 @@ const Login = () => {
                         <label htmlFor="password" className="form-label">Password</label>
                         <input onChange={onChange} value={formValue.password} type="password" className="form-control" placeholder="Enter password" id="password" />
                     </div>
-                    <button type="button" onClick={() => actions.login(formValue,navigate)} className="btn btn-primary">Login</button>                      
+                    <button type="button" onClick={() => actions.login(formValue,navigate)} className="btn btn-primary">Login</button>   
+                    <Link to="/forgot-password">
+                        <a>Forgot Password?</a>
+                    </Link>                   
                 </form>
             </div>
     );

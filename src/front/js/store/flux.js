@@ -421,6 +421,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error);
 				})
 			},
+
+			requestResetLink: async (email) => {
+				try{
+					let response = await fetch(apiUrl + "/reset-link", {
+						method: "POST", 
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify(
+							{"email": email}
+						)
+					})
+					let data = await response.json()
+					if (data){return(true)}
+				}
+				catch(error){console.log(error)}
+			}
 			
 			
 			  

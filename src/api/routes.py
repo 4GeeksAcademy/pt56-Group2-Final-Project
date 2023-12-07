@@ -6,6 +6,15 @@ from api.models import db, User, Post, Comment, Friends
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 import requests
+from werkzeug.security import generate_password_hash, check_password_hash
+
+from datetime import datetime, timedelta
+from email.message import EmailMessage
+import ssl
+import smtplib
+import os
+import jwt
+import secrets
 
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
@@ -318,6 +327,80 @@ def addPlaces():
     db.session.commit()
 
     return jsonify({"msg": "new place added"}), 200
+
+@api.route("/reset-link", methods=['POST'])
+def resetLink():
+    email = request.json.get("email")
+    user = User.query.filter_by(email = email).first()
+    if user is None:
+        return jsonify({"msg": "user does not exist"}), 404
+    expiration_time = db.datetime.utcnow() + db.timedelta(hours=1)
+    payload = {
+        'email': email,
+        'exp': expiration_time
+    }
+    token = jwt.encode(payload, JWT_SECRET_KEY, algorithm='HS256')
+    FRONTEND_URL = os.getenv('FRONTEND_URL')
+    EMAIL_SENDER = os.getenv('EMAIL_SENDER')
+    EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
+    URL_TOKEN = f"{FRONTEND_URL}/reset-password?token={token}"
+    if email is None:
+        return jsonify("No email was provided"),400
+    user = User.query.filter_by(email=email).first()
+    print(user)
+    if user is None:
+        return jsonify({"message":"User doesn't exist"}), 404
+    else:
+        email_receiver = email
+        email_subject = "Reset your password"
+        #email_body = f" Hello, you requested a password reset. If you did not request this, please ignore this email.\n\n We have sent you this link to reset your password.\n\n Smile with us, Hot Doggity Dog Walkers! "
+        #email_body +=f'Link: {URL_TOKEN}\n\n'
+        #email_body += f"This token is valid for 1 hour. After expiration, you will need to request another password reset.\n\n"
+        #email_body += f'Sincerely,\nShelfShare'
+        email_body = render_template('email_template.html', variable=URL_TOKEN)
+        em = EmailMessage()
+        em['from'] = EMAIL_SENDER
+        em['to'] = email_receiver
+        em['subject'] = email_subject
+        em.set_content(email_body)
+
+        context = ssl.create_default_context()
+        with smtplib.SMTP(os.getenv('EMAIL_SERVER'), 587) as smtp:
+            smtp.set_debuglevel(1)
+            smtp.starttls(context=context)
+            smtp.login(EMAIL_SENDER, EMAIL_PASSWORD)
+            smtp.sendmail(EMAIL_SENDER, email_receiver, em.as_string())
+            print("SMTP Login Successful")
+        return "Ok, Password reset link sent to email.",200
+
+@api.route('/reset-password', methods=['POST'])
+def reset_password():
+    data = request.get_json()
+    token = data.get('token')
+    new_password = data.get('new_password')
+
+    try:
+        payload = jwt.decode(token, JWT_SECRET_KEY, algorithms=['HS256'])
+        email = payload.get('email')
+        user = User.query.filter_by(email=email).first()
+        if user:
+            user.password = generate_password_hash(new_password)
+            db.session.commit()
+            return jsonify({'message': 'Password reset successful.'}), 200
+        else:
+            return jsonify({'error': 'User not found.'}), 404
+
+    except jwt.ExpiredSignatureError:
+        return jsonify({'error': 'Expired token.'}), 401
+    except jwt.InvalidTokenError:
+        return jsonify({'error': 'Invalid token.'}), 401
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+
+
+
 
 
 
