@@ -1,6 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
+
 
 const NewPost = () => {
   const navigate = useNavigate();
@@ -12,7 +13,6 @@ const NewPost = () => {
     activities: "",
     transportation: "",
     tips: "",
-    media: null,
   });
 
   const handleInputChange = (e) => {
@@ -21,10 +21,23 @@ const NewPost = () => {
     setPost({ ...post, [name]: inputValue });
   };
 
-  const handleSubmit = (e) => {
+  const ref = useRef(null);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    actions.addNewPost(post, navigate);
+    const updatedPost = { ...post, media: ref.current.files[0] };
+    let formData = new FormData();
+
+    for (let key in updatedPost) {
+      formData.append(key, updatedPost[key]);
+    }
+
+    actions.addNewPost(formData, navigate);
+
+
   };
+
+
 
   return (
     <div className="container mt-4">
@@ -58,7 +71,7 @@ const NewPost = () => {
             </div>
             <div className="form-group">
               <label>Media:</label>
-              <input type="file" className="form-control-file" name="media" accept="image/*" onChange={handleInputChange} />
+              <input type="file" className="form-control-file" name="media" accept="image/*" ref={ref} />
             </div>
             <button type="submit" className="btn btn-primary">Submit</button>
           </form>

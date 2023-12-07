@@ -42,6 +42,7 @@ class Post(db.Model):
     activities = db.Column(db.String(200))
     transportation = db.Column(db.String(200))
     tips = db.Column(db.String)
+    media = db.Column(db.String)
     created_at = db.Column(db.Date)
     modified_at = db.Column(db.Date)
 
@@ -57,7 +58,8 @@ class Post(db.Model):
             "food_drinks": self.food_drinks,
             "activities": self.activities,
             "transportation": self.transportation,
-            "tips": self.tips
+            "tips": self.tips,
+            "media": self.media,
             # do not serialize the password, its a security breach
         }
 

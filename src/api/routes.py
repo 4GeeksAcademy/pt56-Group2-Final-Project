@@ -5,6 +5,7 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Post, Comment, Friends
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
+import requests
 
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
@@ -69,36 +70,48 @@ def createUser():
 
 @api.route('/createpost', methods=['POST'])
 def createPost():
-    try:
-        user_id = request.json.get("user_id")
-        place_name = request.json.get("place_name")
-        stay = request.json.get("stay")
-        food_drinks = request.json.get("food_drinks")
-        activities = request.json.get("activities")
-        transportation = request.json.get("transportation")
-        tips = request.json.get("tips")
+    # try:
+    user_id = request.form.get("user_id")
+    place_name = request.form.get("place_name")
+    stay = request.form.get("stay")
+    food_drinks = request.form.get("food_drinks")
+    activities = request.form.get("activities")
+    transportation = request.form.get("transportation")
+    tips = request.form.get("tips")
+    media=request.files.get('media')
+    
+    imgbb_response = uploadMediaToImgBB(media)
 
-        post = Post(
-            user_id=user_id,
-            place_name=place_name,
-            stay=stay,
-            food_drinks=food_drinks,
-            activities=activities,
-            transportation=transportation,
-            tips=tips
-        )
+    # Save URL in the db
+    post = Post(
+        user_id=user_id,
+        place_name=place_name,
+        stay=stay,
+        food_drinks=food_drinks,
+        activities=activities,
+        transportation=transportation,
+        tips=tips,
+        media=imgbb_response.get('url')  
+    )
 
-        db.session.add(post)
-        db.session.commit()
 
-        response_body = {
-            "msg": "Post successfully added ",
-            "post_id": post.id  # Return the ID of the newly created post
-        }
+    db.session.add(post)
+    db.session.commit()
 
-        return jsonify(response_body), 201  # Use 201 Created status code
-    except Exception as e:
-        return jsonify({"error": str(e)}), 400
+    response_body = {
+        "msg": "Post successfully added",
+        "post_id": post.id  
+    }
+
+    return jsonify(response_body), 201  
+
+
+
+def uploadMediaToImgBB(media):
+    # Upload media to ImgBB and get the URL
+    imgbb_url = "https://api.imgbb.com/1/upload?key=a4164c53da6c55c20d8544a12de89add"
+    imgbb_response = requests.post(imgbb_url, files={'image': media})
+    return imgbb_response.json().get('data')
 
 
 @api.route('/createcomment', methods=['POST'])
@@ -119,11 +132,23 @@ def createComment():
     return jsonify(response_body), 200
 
 @api.route('/addfriend', methods=['POST'])
-def addFriend(): 
-    user_id = request.json.get("user_id")
-    friend_id = request.json.get("friend_id")
+@jwt_required()
+def addFriend():
+    current_user_id = get_jwt_identity() 
+    #user_id = request.json.get("user_id")
+    #friend_id = request.json.get("friend_id")
 
-    friend = Friends(user_id = user_id, friend_id = friend_id)
+    #friend = Friends(user_id = user_id, friend_id = friend_id)
+
+    email = request.json.get("email")
+    first_name = request.json.get("first_name")
+    last_name = request.json.get("last_name")
+
+    user = User.query.filter_by(email=email, first_name=first_name, last_name=last_name).first()
+    if user == None:
+        return jsonify({"msg": "user doesn't exist"}), 401
+
+    friend = Friends(user_id = current_user_id, friend_id = user.id)
 
     db.session.add(friend)
     db.session.commit()

@@ -16,6 +16,7 @@ import Feed from "./pages/Feed.jsx";
 import NewPost from "./pages/NewPost.jsx";
 import MyPosts from "./pages/MyPosts.jsx";
 import Friends from "./pages/Friends.jsx"
+import AddFriend from "./pages/AddFriend.jsx";
 
 import injectContext from "./store/appContext";
 
@@ -47,6 +48,7 @@ const Layout = () => {
             <Route element={<NewPost />} path="/newpost" />
             <Route element={<MyPosts />} path="/myposts" />
             <Route element={<Friends />} path="/friends" />  
+            <Route element={<AddFriend />} path="/addfriend" /> 
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />
