@@ -11,8 +11,8 @@ class User(db.Model):
     perm_location = db.Column(db.String(80), unique=False)
     # places_visited = db.Column(db.String, unique=False)
     # wishlist_places = db.Column(db.String, unique=False)
-    places_visited = db.Column(db.ARRAY(db.String(80)), unique=False)
-    wishlist_places = db.Column(db.ARRAY(db.String(80)), unique=False)
+    places_visited = db.Column(db.ARRAY(db.String()), unique=False)
+    wishlist_places = db.Column(db.ARRAY(db.String()), unique=False)
     #will make array by separating by comma
 
     def __repr__(self):

@@ -37,8 +37,18 @@ export const LoggedInNavbar = () => {
                         </Link>
                     </div>
                     <div className="ml-auto">
+                        <Link to="/feed">
+                            <span>Feed</span>
+                        </Link>
+                    </div>
+                    <div className="ml-auto">
                         <Link to="/profile">
                             <span>My Profile</span>
+                        </Link>
+                    </div>
+                    <div className="ml-auto">
+                        <Link to="/myposts">
+                            <span>My Posts</span>
                         </Link>
                     </div>
                     <div className="ml-auto">

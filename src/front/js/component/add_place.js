@@ -5,21 +5,15 @@ import {useNavigate } from "react-router-dom";
 
 export const AddPlace = ({typeOfList}) => {  
   const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
+
 
   const UpdateList = () => {
     const placeInput = document.getElementById('place_input');
     const placeValue = placeInput.value;
-    console.log(placeValue)
-    if (typeOfList=="Places I've been"){
-      actions.addVisitedPlace(store.user, placeValue)
-    }
-    else if( typeOfList=="Places I want to go"){
-      actions.addWishlistPlace(store.user, placeValue)
-    }
-    else{
-      console.log("an error occurred")
-    }
+    actions.authenticateAddPlace(typeOfList, placeValue, navigate)
   }
+
   return (
     <div class="modal fade" id="addPlaceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
