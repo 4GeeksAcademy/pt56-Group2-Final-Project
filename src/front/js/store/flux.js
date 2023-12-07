@@ -421,6 +421,37 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error);
 				})
 			},
+			removeFriend: (friend, i, navigate) => {
+				const store = getStore();
+				const url = apiUrl+"/api/removefriend";
+				fetch(url, {
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": "Bearer " + store.token
+					},
+					body: JSON.stringify({						
+						"friend": friend
+					})					
+				})
+				.then(async resp => {
+					console.log(resp.ok); // will be true if the response is successfull
+					console.log(resp.status); // the status code = 200 or code = 400 etc.
+					if(!resp.ok){
+						alert("User doesn't exist");
+						return false;						
+					}
+					//console.log(resp.text()); // will try return the exact result as string
+					await resp.json();
+					let newList = store.friends.filter((item)=> item != friend);
+					setStore({friends: newList});
+					navigate('/friends');
+				})				
+				.catch(error => {
+					//error handling
+					console.log(error);
+				})
+			}
 			
 			
 			  
