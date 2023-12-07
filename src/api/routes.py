@@ -68,10 +68,13 @@ def createUser():
 
     return jsonify(response_body), 200
 
+
 @api.route('/createpost', methods=['POST'])
+@jwt_required()
 def createPost():
+    current_user_id = get_jwt_identity() 
+
     # try:
-    user_id = request.form.get("user_id")
     place_name = request.form.get("place_name")
     stay = request.form.get("stay")
     food_drinks = request.form.get("food_drinks")
@@ -84,7 +87,7 @@ def createPost():
 
     # Save URL in the db
     post = Post(
-        user_id=user_id,
+        user_id=current_user_id,
         place_name=place_name,
         stay=stay,
         food_drinks=food_drinks,
@@ -218,30 +221,6 @@ def getFriends():
         friends.append(friend.first_name + " " + friend.last_name)
     return jsonify(friends), 200
 
-# #edit user profile
-# @api.route('/edit_user_profile/<int:user_id>', methods=['PUT'])
-# def edit_user_profile(user_id):
-#     user = User.query.get(user_id)
-#     if not user: return jsonify({'message': 'User not found'}), 404
-
-#     # Get updated user data
-#     updated_data = request.json
-#     updated_first_name = updated_data.get('first_name') 
-#     updated_last_name= updated_data.get('last_name')
-#     updated_perm_location= updated_data.get('perm_location')
-#     updated_places_visted= updated_data.get('places_visited')
-#     updated_wihlist_places= updated_data.get('wishlist_places')
-
-#     # Update the user profile
-#     if updated_first_name: user.first_name = updated_first_name
-#     if updated_last_name: user.last_name = updated_last_name
-#     if updated_perm_location: user.perm_location = updated_perm_location
-#     if updated_places_visted: user.places_visited = updated_places_visted
-#     if updated_wihlist_places: user.wishlist_places = updated_wihlist_places
-    
-#     db.session.commit()
-
-#     return jsonify({'message': 'user profile updated successfully'}), 200 
 
 
 #login

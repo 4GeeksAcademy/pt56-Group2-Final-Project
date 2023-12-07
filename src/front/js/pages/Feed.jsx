@@ -15,27 +15,39 @@ const Feed = () => {
             authenticate() }, 500)        
     }, [])
 
+
     return (
         <div className="container text-center">
             <h1>Feed</h1>
             {store.feed!= null ?
-                store.feed.map((item,index) => {
-                    return(
-                        <div key={index} className="mb-5">
-                            <h2>User ID: {item.user_id}</h2>
-                            <h2>Stay: {item.stay}</h2>
-                            <h2>Food/Drinks: {item.food_drinks}</h2>
-                            <h2>Activities: {item.activities}</h2>
-                            <h2>Transportation: {item.transportation}</h2>
-                            <h2>Tips: {item.tips}</h2>                                                        
-                        </div>
-                    );
-                })                
+             <div className="container mt-4">
+               <div className="row justify-content-center">
+                 <div className="col-md-6">
+                   <ul className="list-group">
+                     {store.feed.map((item,index) => (
+                       <li key={item.id} className="list-group-item">
+                         <h3>Location: {item.place_name}</h3>
+                         <p>Stay: {item.stay}</p>
+                         <p>Food: {item.food_drinks}</p>
+                         <p>Activities: {item.activities}</p>
+                         <p>Transportation: {item.transportation}</p>
+                         <p>Tips: {item.tips}</p>
+                         {item.media && (
+                           <img src={item.media} alt="media" className="img-fluid" />
+                         )}
+                       </li>
+                     ))}
+                   </ul>
+                 </div>
+               </div>
+           </div>          
                 :
                 ''
             }
         </div>
     );
+
+
 }
 
 export default Feed;

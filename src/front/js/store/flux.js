@@ -414,7 +414,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 					//console.log(resp.text()); // will try return the exact result as string
 					await resp.json();					
-					navigate('/addfriend');
+					navigate('/friends');
 				})				
 				.catch(error => {
 					//error handling
