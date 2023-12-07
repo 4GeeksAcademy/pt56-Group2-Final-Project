@@ -193,30 +193,30 @@ def getFriends():
         friends.append(friend.first_name + " " + friend.last_name)
     return jsonify(friends), 200
 
-#edit user profile
-@api.route('/edit_user_profile/<int:user_id>', methods=['PUT'])
-def edit_user_profile(user_id):
-    user = User.query.get(user_id)
-    if not user: return jsonify({'message': 'User not found'}), 404
+# #edit user profile
+# @api.route('/edit_user_profile/<int:user_id>', methods=['PUT'])
+# def edit_user_profile(user_id):
+#     user = User.query.get(user_id)
+#     if not user: return jsonify({'message': 'User not found'}), 404
 
-    # Get updated user data
-    updated_data = request.json
-    updated_first_name = updated_data.get('first_name') 
-    updated_last_name= updated_data.get('last_name')
-    updated_perm_location= updated_data.get('perm_location')
-    updated_places_visted= updated_data.get('places_visited')
-    updated_wihlist_places= updated_data.get('wishlist_places')
+#     # Get updated user data
+#     updated_data = request.json
+#     updated_first_name = updated_data.get('first_name') 
+#     updated_last_name= updated_data.get('last_name')
+#     updated_perm_location= updated_data.get('perm_location')
+#     updated_places_visted= updated_data.get('places_visited')
+#     updated_wihlist_places= updated_data.get('wishlist_places')
 
-    # Update the user profile
-    if updated_first_name: user.first_name = updated_first_name
-    if updated_last_name: user.last_name = updated_last_name
-    if updated_perm_location: user.perm_location = updated_perm_location
-    if updated_places_visted: user.places_visited = updated_places_visted
-    if updated_wihlist_places: user.wishlist_places = updated_wihlist_places
+#     # Update the user profile
+#     if updated_first_name: user.first_name = updated_first_name
+#     if updated_last_name: user.last_name = updated_last_name
+#     if updated_perm_location: user.perm_location = updated_perm_location
+#     if updated_places_visted: user.places_visited = updated_places_visted
+#     if updated_wihlist_places: user.wishlist_places = updated_wihlist_places
     
-    db.session.commit()
+#     db.session.commit()
 
-    return jsonify({'message': 'user profile updated successfully'}), 200 
+#     return jsonify({'message': 'user profile updated successfully'}), 200 
 
 
 #login
@@ -305,11 +305,11 @@ def addPlaces():
     new_wishlist_place = new_place.get('wishlist_places')
     
     if new_place_visited:
-        if user.places_visited: user.places_visited = ",".join(user.places_visited) + "," + str(new_place_visited)
-        else: user.places_visited = str(new_place_visited + ",")
+        if user.places_visited: user.places_visited = user.places_visited + [new_place_visited]
+        else: user.places_visited = [new_place_visited]
     if new_wishlist_place:
-        if user.wishlist_places: user.wishlist_places.append(new_wishlist_place)
-        else: user.wishlist_places = new_wishlist_place
+        if user.wishlist_places: user.wishlist_places = user.wishlist_places + [new_wishlist_place]
+        else: user.wishlist_places = [new_wishlist_place]
 
     db.session.commit()
 
