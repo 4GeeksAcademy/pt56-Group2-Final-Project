@@ -24,7 +24,15 @@ const Friends = () => {
             <h1>Friends:</h1>
             <ul class="list-group list-group-flush">
                 {store.friends.map((friend, i) =>
-                    <li class="list-group-item" key={i}>{friend}</li>
+                    //<li class="list-group-item" key={i}>{friend}</li>
+                    <li key={i} className="list-group-item row d-flex">
+						<div className="col">											
+							{friend}																						
+						</div>
+						<div className="col text-end">
+							<button onClick={() => actions.removeFriend(friend, i, navigate)}>Remove Friend</button>
+						</div>
+					</li>
                 )}
             </ul>
         </div>

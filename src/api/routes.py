@@ -163,11 +163,19 @@ def addFriend():
     return jsonify(response_body), 200
 
 @api.route('/removefriend', methods=['DELETE'])
+@jwt_required()
 def removeFriend():
-    user_id = request.json.get("user_id")
-    friend_id = request.json.get("friend_id")
+    current_user_id = get_jwt_identity()
+    #user_id = request.json.get("user_id")
+    #friend_id = request.json.get("friend_id")
+    name = request.json.get("friend")
+    x = name.split()
+    friendid = User.query.filter_by(first_name=x[0], last_name = x[1]).first()
 
-    friend = Friends.query.filter_by(user_id = user_id, friend_id = friend_id).first()
+    if friendid == None:
+        return jsonify({"msg": "user doesn't exist"}), 401
+
+    friend = Friends.query.filter_by(user_id = current_user_id, friend_id = friendid.id).first()
 
     db.session.delete(friend)
     db.session.commit()
