@@ -32,11 +32,11 @@ export const LoggedInNavbar = () => {
                     </>
                     :
                         <>
-                        <div className="ml-auto">
+                        {/* <div className="ml-auto">
                         <Link to="/search">
                             <span>Search</span>
                         </Link>
-                    </div>
+                        </div> */}
                     <div className="ml-auto">
                         <Link to="/friends">
                             <span>Friends</span>
