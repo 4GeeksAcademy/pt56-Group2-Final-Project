@@ -1,7 +1,18 @@
-import React from "react";
-import  "../component/styles.css";
+import React, { useEffect } from "react";
+import "../component/styles.css";
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 const LandingPage = () => {
+  useEffect(() => {
+    // this starts the carousel automatically 
+    const carousel = new window.bootstrap.Carousel(document.getElementById('carouselExample'));
+
+    carousel.cycle();
+
+    return () => {
+      carousel.dispose();
+    };
+  }, []);
     return (
       <div className="container landing-container">
         <div className="welcome-text">
