@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { useContext} from "react";
+import  "../component/styles.css";
 
 // "Link" paths just written are just for reference, should be changed later
 export const LoggedInNavbar = () => {
@@ -12,9 +13,14 @@ export const LoggedInNavbar = () => {
 	return (
 		<nav className="navbar navbar-light bg-light border-bottom">
 			<div className="container-fluid">
-				<Link to="/">
-					<span className="navbar-brand mb-0 h1">Logo</span>
-				</Link>
+                        <Link to="/">
+                            <img
+                            src="https://bcassetcdn.com/social/wwqaa4lb37/preview.png"
+                            alt="Logo"
+                            className="navbar-brand mb-0 h1"
+                            style={{ width: '80px', height: 'auto' }}
+                            />
+                        </Link>
                 {!store.token ? 
                     <>
                         <Link to="/login">

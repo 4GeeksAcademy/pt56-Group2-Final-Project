@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 import { EditProfile } from "../component/edit_profile";
 import {AddPlace} from "../component/add_place"
+import  "../component/styles.css";
 
 //NEED EDIT PROFILE ROUTE TO ADD VISITIED/WISHLIST PLACES AND TO EDIT PROFILE
 const Profile = () => {
@@ -20,7 +21,7 @@ const Profile = () => {
     }, [])
 
     return (
-        <div className="container text-center">
+        <div className="container text-center profile-container">
             {store.user != null ?
                 <div className="container">
                     <div className="row justify-content-end">

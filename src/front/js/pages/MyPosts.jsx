@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
+import  "../component/styles.css";
 
 const MyPosts = () => {
   const { store, actions } = useContext(Context);
@@ -18,7 +19,7 @@ const MyPosts = () => {
   }, [])
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-4 my-posts-container">
       <h1 className="text-center mb-4">My Posts</h1>
         <div className="row justify-content-center">
           <div className="col-md-6">

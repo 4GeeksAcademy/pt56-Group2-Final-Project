@@ -18,6 +18,7 @@ import MyPosts from "./pages/MyPosts.jsx";
 import Friends from "./pages/Friends.jsx"
 import AddFriend from "./pages/AddFriend.jsx";
 
+
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
