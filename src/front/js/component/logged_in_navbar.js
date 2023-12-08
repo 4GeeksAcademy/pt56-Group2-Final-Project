@@ -39,7 +39,7 @@ export const LoggedInNavbar = () => {
                         </div> */}
                     <div className="ml-auto">
                         <Link to="/friends">
-                            <span>Friends</span>
+                            <span>Travel Buddies</span>
                         </Link>
                     </div>
                     <div className="ml-auto">

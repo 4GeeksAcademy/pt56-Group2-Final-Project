@@ -15,13 +15,13 @@ const LandingPage = () => {
         <div id="carouselExample" className="carousel slide w-50 mx-auto">
           <div className="carousel-inner custom-carousel">
             <div className="carousel-item active">
-              <img src="https://i.ibb.co/1rXmPQm/media.png" className="d-block w-100" alt="..." />
+              <img src="https://i.ibb.co/7Rjw3xS/media.png" className="d-block w-100" alt="..." />
             </div>
             <div className="carousel-item">
-              <img src="https://i.ibb.co/ZLgCm2n/media.png" className="d-block w-100" alt="..." />
+              <img src="https://i.ibb.co/p2n9WBG/media.png" className="d-block w-100" alt="..." />
             </div>
             <div className="carousel-item">
-              <img src="https://i.ibb.co/7Wd7tkg/media.png" className="d-block w-100" alt="..." />
+              <img src="https://i.ibb.co/NSrnc1q/media.png" className="d-block w-100" alt="..." />
             </div>
           </div>
           <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">

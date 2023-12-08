@@ -18,7 +18,8 @@ const Feed = () => {
 
     return (
       <div className="container text-center feed-container">
-      <h1>Latest from your friends</h1>
+        <br></br>
+      <h1>Latest from your Travel Buddies</h1>
       {store.feed != null ? (
         <div className="container mt-4">
           <div className="row justify-content-center">

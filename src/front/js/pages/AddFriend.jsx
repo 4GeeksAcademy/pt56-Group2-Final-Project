@@ -26,7 +26,7 @@ const AddFriend = () => {
         <div className="container mt-5 add-friend-container">
           <form className="row g-3 border border-lightgray">
             <div className="py-2 bg-light border-bottom border-lightgray mt-0 text-center">
-              <h2>Add friend</h2>
+              <h2>Add A Travel Buddy</h2>
             </div>
             <div className="col-md-12">
               <label htmlFor="email" className="form-label">
@@ -72,7 +72,7 @@ const AddFriend = () => {
               onClick={() => actions.addFriend(formValue, navigate)}
               className="btn btn-primary"
             >
-              Add Friend
+              Add Travel Buddy
             </button>
           </form>
         </div>

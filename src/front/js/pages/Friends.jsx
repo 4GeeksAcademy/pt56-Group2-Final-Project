@@ -22,7 +22,7 @@ const Friends = () => {
 
     return(
         <div className="container friends-container">
-            <h1>Friends:</h1>
+            <h1>Your Travel Buddies:</h1>
             <ul class="list-group list-group-flush">
                 {store.friends.map((friend, i) =>
                     //<li class="list-group-item" key={i}>{friend}</li>
