@@ -1,7 +1,7 @@
 import React, { useState, useContext, useRef } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
-
+import  "../component/styles.css";
 
 const NewPost = () => {
   const navigate = useNavigate();
@@ -40,10 +40,11 @@ const NewPost = () => {
 
 
   return (
-    <div className="container mt-4">
+    <div className="container new-post-container mt-4">
       <div className="row justify-content-center">
         <div className="col-md-6">
-          <h1 className="text-center mb-4">New Post</h1>
+          <h1 className="text-center mb-4">Create A New Post</h1>
+          <h3 className="text-center mb-4">Let your friends know where you've been and what's good!</h3>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label>Location:</label>

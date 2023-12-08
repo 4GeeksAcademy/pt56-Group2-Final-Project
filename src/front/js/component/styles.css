@@ -1,0 +1,584 @@
+
+/* New Post page styles below this line */
+.new-post-container {
+  max-width: 800px;
+  margin: 50px auto 0;
+  padding: 20px;
+  background-image: linear-gradient(to right, #2196f3, #6ec6ff); 
+  color: white; 
+}
+
+/* Heading Styles */
+.new-post-container h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Form Styles */
+.new-post-container .form-container {
+  background-color: rgba(255, 255, 255, 0.9); 
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.new-post-container .form-group {
+  margin-bottom: 20px;
+}
+
+.new-post-container label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.new-post-container input,
+.new-post-container textarea {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #6a737d;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+.new-post-container input:focus,
+.new-post-container textarea:focus {
+  border-color: #007bff;
+}
+
+.new-post-container input[type="file"] {
+  border: none;
+}
+
+.new-post-container button {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+}
+
+.new-post-container button:hover {
+  background-color: #218838;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .new-post-container {
+    max-width: 100%;
+  }
+}
+/* below this line is styling for My Posts page */
+
+/* Container Styles */
+.my-posts-container {
+  max-width: 800px;
+  margin: 50px auto 0; 
+  padding: 20px;
+}
+
+/* Heading Styles */
+.my-posts-container h1 {
+  color: #2196f3; 
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* List Styles */
+.my-posts-container .list-group {
+  background-color: #f0f8ff; 
+  border: 1px solid #d3d3d3; 
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.my-posts-container .list-group-item {
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ced4da; 
+  border-radius: 8px;
+}
+
+.my-posts-container h3 {
+  color: #333;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.my-posts-container p {
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.my-posts-container img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .my-posts-container {
+    max-width: 100%;
+  }
+}
+
+/* below this line is the styling for the profile page */
+.profile-container {
+  background-color: #f0f8ff; 
+  padding: 50px 20px;
+}
+
+/* Edit Profile Button Styles */
+.profile-container .edit-profile-button {
+  margin-bottom: 20px;
+}
+
+/* User Info Styles */
+.profile-container h1 {
+  color: #2196f3; 
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.profile-container h3 {
+  color: #333; 
+  margin: 0;
+}
+
+/* Card Styles */
+.profile-container .card {
+  width: 25rem;
+  background-color: #ffffff; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-container .card-header {
+  background-color: #007bff; 
+  color: #ffffff; 
+}
+
+.profile-container .list-group-item {
+  border: none;
+}
+
+/* Add New Place Button Styles */
+.profile-container .card-footer {
+  background-color: #f0f8ff; 
+  padding: 10px;
+}
+
+.profile-container .add-place-button {
+  background-color: #28a745; 
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.profile-container .add-place-button:hover {
+  background-color: #218838; 
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-container {
+    max-width: 100%;
+  }
+  
+  .profile-container .card {
+    width: 100%;
+  }
+}
+
+/* below this line is styling for the friends page */
+
+.friends-container {
+  background-color: #f8f9fa; 
+  padding: 20px;
+}
+
+/* Heading Styles */
+.friends-container h1 {
+  color: #333; 
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+/* List Styles */
+.friends-container .list-group-item {
+  background-color: #ffffff; 
+  border: 1px solid #ced4da; 
+  margin-bottom: 10px;
+}
+
+.friends-container .list-group-item:hover {
+  background-color: #f0f0f0;
+}
+
+/* Friend Text Styles */
+.friends-container .list-group-item .col {
+  color: #333; 
+}
+
+/* Remove Friend Button Styles */
+.friends-container .list-group-item button {
+  background-color: #dc3545; 
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.friends-container .list-group-item button:hover {
+  background-color: #c82333; 
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .friends-container {
+    max-width: 100%;
+  }
+}
+
+/* below this line is styling for the landing page */
+
+.landing-container {
+  background-color: #f8f9fa; 
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Carousel Styles */
+.landing-container #carouselExample {
+  max-width: 25%; 
+  margin: 20px auto;
+}
+
+.landing-container .carousel-inner img {
+  width: 100%; 
+  height: auto; 
+}
+
+/* Welcome Section Styles */
+.landing-container .welcome-text {
+  text-align: center;
+  color: #333; 
+  margin-bottom: 20px;
+  padding: 15px; 
+  border-radius: 8px; 
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); 
+  background-color: #3498db; 
+  color: #ffffff; 
+}
+
+/* Mission Statement Styles */
+.landing-container {
+  background-color: #f8f9fa; 
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Carousel Styles */
+.landing-container #carouselExample {
+  max-width: 25%; 
+  margin: 20px auto;
+}
+
+.landing-container .carousel-inner img {
+  width: 100%; 
+  height: auto; 
+}
+
+/* Welcome Section Styles */
+.landing-container .welcome-text {
+  text-align: center;
+  color: #333; 
+  margin-bottom: 10px; 
+  padding: 15px; 
+  border-radius: 8px; 
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); 
+  background-color: #3498db; 
+  color: #ffffff; 
+}
+
+/* Mission Statement Styles */
+.landing-container p {
+  margin-bottom: 10px; 
+  padding: 10px; 
+  border-radius: 8px; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+  background-color: #27ae60; 
+  color: #ffffff; 
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .landing-container {
+    max-width: 100%;
+  }
+}
+
+/* styling for navbar is under this line */
+.navbar {
+  background-color: #ffffff; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+/* Navbar logo Styles */
+.navbar-brand img {
+  width: 100px; 
+  height: auto; 
+}
+
+/* Button Styles */
+.btn {
+  margin: 0 5px; 
+}
+
+/* Primary Button Styles */
+.btn-primary {
+  background-color: #007bff; 
+  color: #ffffff; 
+}
+
+.btn-primary:hover {
+  background-color: #0056b3; 
+}
+
+/* Outline Button Styles */
+.btn-outline-primary {
+  border: 1px solid #007bff; 
+  color: #007bff; 
+}
+
+.btn-outline-primary:hover {
+  background-color: #007bff; 
+  color: #ffffff; 
+}
+
+/* Danger Button Styles */
+.btn-outline-danger {
+  border: 1px solid #dc3545; 
+  color: #dc3545; 
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545; 
+  color: #ffffff; 
+}
+
+/* Navbar Links Styles */
+.navbar a {
+  text-decoration: none; 
+  color: #333; 
+}
+
+.navbar a:hover {
+  color: #007bff; 
+}
+
+/* below this line is styling for the add friend page  */
+.add-friend-container {
+  margin-top: 50px; 
+}
+
+/* Form Styles for AddFriend page */
+.add-friend-container form {
+  padding: 20px;
+  border: 1px solid #e1e1e1; 
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Header Styles for AddFriend page */
+.add-friend-container form .bg-light {
+  padding: 10px;
+  border-bottom: 1px solid #e1e1e1; 
+}
+
+.add-friend-container form h2 {
+  color: #3498db; 
+}
+
+/* Form Input Styles for AddFriend page */
+.add-friend-container form label {
+  color: #555; 
+}
+
+.add-friend-container form input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ced4da; 
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+/* Primary Button Styles for AddFriend page */
+.add-friend-container .btn-primary {
+  background-color: #2ecc71; 
+  color: #ffffff; 
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+  padding: 10px 15px;
+}
+
+.add-friend-container .btn-primary:hover {
+  background-color: #27ae60; 
+}
+/* below this line is styling for the feed page */
+.feed-container .list-group-item {
+  border: 1px solid #e1e1e1; 
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 15px; 
+}
+
+.feed-container .list-group-item h3 {
+  color: #555; 
+  font-size: 18px; 
+}
+
+.feed-container .list-group-item p {
+  color: #777; 
+  font-size: 14px; 
+  margin-bottom: 8px; 
+}
+
+.feed-container .list-group-item img {
+  max-width: 100%; 
+  height: auto; 
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .feed-container {
+    max-width: 100%;
+  }
+}
+
+/* below this line is styling for the login page */
+.login-container {
+  margin-top: 50px; 
+}
+
+/* Form Styles */
+.login-container form {
+  padding: 20px;
+  border: 1px solid #e1e1e1; 
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Header Styles */
+.login-container form .bg-light {
+  padding: 10px;
+  border-bottom: 1px solid #e1e1e1; 
+}
+
+.login-container form h2 {
+  color: #3498db; 
+}
+
+/* Form Input Styles */
+.login-container form label {
+  color: #555; 
+}
+
+.login-container form input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ced4da; 
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+/* Primary Button Styles */
+.login-container .btn-primary {
+  background-color: #2ecc71; 
+  color: #ffffff; 
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+  padding: 10px 15px;
+}
+
+.login-container .btn-primary:hover {
+  background-color: #27ae60; 
+}
+
+/* below this line is styling for the sign up page  */
+.signup-container {
+  margin-top: 50px; 
+}
+
+/* Form Styles */
+.signup-container form {
+  padding: 20px;
+  border: 1px solid #e1e1e1; 
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Header Styles */
+.signup-container form .bg-light {
+  padding: 10px;
+  border-bottom: 1px solid #e1e1e1; 
+}
+
+.signup-container form h2 {
+  color: #fb0404; 
+}
+
+/* Form Input Styles */
+.signup-container form label {
+  color: #555; 
+}
+
+.signup-container form input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ced4da; 
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+/* Primary Button Styles */
+.signup-container .btn-primary {
+  background-color: #3498db; 
+  color: #ffffff; 
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+  padding: 10px 15px;
+}
+
+.signup-container .btn-primary:hover {
+  background-color: #2980b9; 
+}

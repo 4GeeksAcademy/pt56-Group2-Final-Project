@@ -17,34 +17,39 @@ const Feed = () => {
 
 
     return (
-        <div className="container text-center">
-            <h1>Feed</h1>
-            {store.feed!= null ?
-             <div className="container mt-4">
-               <div className="row justify-content-center">
-                 <div className="col-md-6">
-                   <ul className="list-group">
-                     {store.feed.map((item,index) => (
-                       <li key={item.id} className="list-group-item">
-                         <h3>Location: {item.place_name}</h3>
-                         <p>Stay: {item.stay}</p>
-                         <p>Food: {item.food_drinks}</p>
-                         <p>Activities: {item.activities}</p>
-                         <p>Transportation: {item.transportation}</p>
-                         <p>Tips: {item.tips}</p>
-                         {item.media && (
-                           <img src={item.media} alt="media" className="img-fluid" />
-                         )}
-                       </li>
-                     ))}
-                   </ul>
-                 </div>
-               </div>
-           </div>          
-                :
-                ''
-            }
+      <div className="container text-center feed-container">
+        <br></br>
+      <h1>Latest from your Travel Buddies</h1>
+      {store.feed != null ? (
+        <div className="container mt-4">
+          <div className="row justify-content-center">
+            <div className="col-md-6">
+              <ul className="list-group">
+                {store.feed.map((item, index) => (
+                  <li key={item.id} className="list-group-item">
+                    <h3>Location: {item.place_name}</h3>
+                    <p>Stay: {item.stay}</p>
+                    <p>Food: {item.food_drinks}</p>
+                    <p>Activities: {item.activities}</p>
+                    <p>Transportation: {item.transportation}</p>
+                    <p>Tips: {item.tips}</p>
+                    {item.media && (
+                      <img
+                        src={item.media}
+                        alt="media"
+                        className="img-fluid"
+                      />
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
+      ) : (
+        ''
+      )}
+    </div>
     );
 
 
