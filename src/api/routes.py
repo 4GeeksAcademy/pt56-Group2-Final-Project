@@ -263,9 +263,9 @@ def protected():
             "permanent_location": user.perm_location, "places_visited": user.places_visited, "wishlist_places": user.wishlist_places }), 200
 
 @api.route("/feed", methods=['GET'])
-@jwt_required()
+#@jwt_required()
 def feed():
-    current_user_id = get_jwt_identity()
+    current_user_id = 1
     feed = []       
     user = User.query.get(current_user_id)
 
@@ -280,8 +280,13 @@ def feed():
      
     for friend in allFriends:
         post = Post.query.filter_by(user_id = friend['friend_id'])
-        feed += list(map(lambda x :x.serialize(), post))
         
+        allPosts = list(map(lambda x :x.serialize(), post))
+        for post in allPosts:
+            user = User.query.filter_by(id = friend['friend_id']).first()
+            post["name"] = user.first_name + " " + user.last_name
+
+        feed += allPosts
 
     return jsonify(feed), 200
 

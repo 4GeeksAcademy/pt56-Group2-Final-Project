@@ -27,7 +27,8 @@ const Feed = () => {
               <ul className="list-group">
                 {store.feed.map((item, index) => (
                   <li key={item.id} className="list-group-item">
-                    <h3>Location: {item.place_name}</h3>
+                    <h3>{item.name}</h3>
+                    <h3>Location: {item.place_name}</h3>                    
                     <p>Stay: {item.stay}</p>
                     <p>Food: {item.food_drinks}</p>
                     <p>Activities: {item.activities}</p>
