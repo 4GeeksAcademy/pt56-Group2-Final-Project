@@ -32,6 +32,7 @@ const Feed = () => {
                          <p>Activities: {item.activities}</p>
                          <p>Transportation: {item.transportation}</p>
                          <p>Tips: {item.tips}</p>
+                         <p>@{item.username}</p>
                          {item.media && (
                            <img src={item.media} alt="media" className="img-fluid" />
                          )}

@@ -328,6 +328,7 @@ def addPlaces():
 
     return jsonify({"msg": "new place added"}), 200
 
+
 @api.route("/reset-link", methods=['POST'])
 def resetLink():
     email = request.json.get("email")
