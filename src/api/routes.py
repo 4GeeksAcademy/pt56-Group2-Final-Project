@@ -263,9 +263,9 @@ def protected():
             "permanent_location": user.perm_location, "places_visited": user.places_visited, "wishlist_places": user.wishlist_places }), 200
 
 @api.route("/feed", methods=['GET'])
-#@jwt_required()
+@jwt_required()
 def feed():
-    current_user_id = 1
+    current_user_id = get_jwt_identity()
     feed = []       
     user = User.query.get(current_user_id)
 
