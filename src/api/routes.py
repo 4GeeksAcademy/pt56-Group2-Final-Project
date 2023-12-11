@@ -13,6 +13,7 @@ import ssl
 import uuid
 from urllib.parse import unquote, quote
 import secrets
+import os
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, decode_token
 
 api = Blueprint('api', __name__)
@@ -372,8 +373,8 @@ def forgotpassword():
 
         access_token = create_access_token(identity=payload)
 
-        FRONTEND_URL = "https://urban-space-zebra-7vpvgv9v7qjcw6pq-3000.app.github.dev"
-        SENDGRID_API_KEY = "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"
+        FRONTEND_URL = os.getenv('FRONTEND_URL')
+        SENDGRID_API_KEY = os.getenv('SENDGRID')
 
         URL_TOKEN = f"{FRONTEND_URL}/resetpassword?token={access_token}"
 
