@@ -9,11 +9,9 @@ class User(db.Model):
     first_name = db.Column(db.String(80), unique=False)
     last_name = db.Column(db.String(80), unique=False)
     perm_location = db.Column(db.String(80), unique=False)
-    # places_visited = db.Column(db.String, unique=False)
-    # wishlist_places = db.Column(db.String, unique=False)
     places_visited = db.Column(db.ARRAY(db.String()), unique=False)
     wishlist_places = db.Column(db.ARRAY(db.String()), unique=False)
-    #will make array by separating by comma
+    reset_token = db.Column(db.String(200))
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -26,9 +24,13 @@ class User(db.Model):
             "last_name": self.last_name,
             "permanent_location": self.perm_location,
             "places_visited": self.places_visited,
-            "wishlist_places": self.wishlist_places
-            # do not serialize the password, its a security breach
+            "wishlist_places": self.wishlist_places,
+            "reset_token": self.reset_token
         }
+
+    @classmethod
+    def find_by_email(cls, email):
+        return cls.query.filter_by(email=email).first()
 
 
 
