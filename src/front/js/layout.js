@@ -53,7 +53,7 @@ const Layout = () => {
             <Route element={<MyPosts />} path="/myposts" />
             <Route element={<Friends />} path="/friends" />  
             <Route element={<AddFriend />} path="/addfriend" /> 
-            <Route element={<ForgotPassword />} path="forgotpassword" />
+            <Route element={<ForgotPassword />} path="/forgotpassword" />
             <Route element={<ResetPassword />} path="/resetpassword" />
             <Route element={<ValidateResetPassword />} path="/validateresetpassword/:token" /> 
             <Route element={<h1>Not found!</h1>} />
@@ -66,4 +66,3 @@ const Layout = () => {
 };
 
 export default injectContext(Layout);
-

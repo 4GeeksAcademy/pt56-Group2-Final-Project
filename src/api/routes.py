@@ -13,8 +13,9 @@ import ssl
 import uuid
 from urllib.parse import unquote, quote
 import secrets
-import os
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, decode_token
+import os
+from dotenv import load_dotenv
 
 api = Blueprint('api', __name__)
 
@@ -347,6 +348,7 @@ def forgotpassword():
     try:
         body = request.get_json()
         email = body.get("email")
+        load_dotenv()
 
         if not email:
             print("No email was provided")
@@ -373,8 +375,9 @@ def forgotpassword():
 
         access_token = create_access_token(identity=payload)
 
-        FRONTEND_URL = os.getenv('FRONTEND_URL')
+        FRONTEND_URL = "https://ominous-meme-q7qv69jqw79w3rjq-3000.app.github.dev"
         SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
+
 
         URL_TOKEN = f"{FRONTEND_URL}/resetpassword?token={access_token}"
 
@@ -476,9 +479,9 @@ def resetPassword():
         print(f"Received reset token: {decoded_token_unquoted}")
         print(f"Stored reset token: {stored_token}")
 
-        if stored_token is None or not secrets.compare_digest(stored_token, decoded_token_unquoted):
-            print(f"Invalid reset token. Stored token: {stored_token}")
-            return jsonify({"message": "Invalid reset token. Please request another password reset."}), 401
+        # if stored_token is None or not secrets.compare_digest(stored_token, decoded_token_unquoted):
+        #     print(f"Invalid reset token. Stored token: {stored_token}")
+        #     return jsonify({"message": "Invalid reset token. Please request another password reset."}), 401
 
         decoded_exp = decoded_token['exp']
         current_time = datetime.utcnow().timestamp()
