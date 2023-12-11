@@ -374,7 +374,7 @@ def forgotpassword():
         access_token = create_access_token(identity=payload)
 
         FRONTEND_URL = os.getenv('FRONTEND_URL')
-        SENDGRID_API_KEY = os.getenv('SENDGRID')
+        SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
 
         URL_TOKEN = f"{FRONTEND_URL}/resetpassword?token={access_token}"
 
