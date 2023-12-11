@@ -19,7 +19,6 @@ export const AddPlace = ({typeOfList}) => {
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">{typeOfList}</h1>
             <h3 class="modal-title fs-5" id="exampleModalLabel">Add a Place</h3>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
