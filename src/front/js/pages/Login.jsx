@@ -15,7 +15,7 @@ const Login = () => {
 
   return (
     <div className="container login-container mt-5">
-      <form className="row g-3 border border-lightgray">
+      <form className="row g-3 border border-lightgray bg-light">
         <div className="py-2 bg-light border-bottom border-lightgray mt-0 text-center">
           <h2>Login</h2>
         </div>
@@ -49,8 +49,12 @@ const Login = () => {
           {/* Link to the forgotpassword page */}
           <Link to="/forgotpassword">Forgot Password?</Link>
         </div>
+        <br />
+        <br />
         <button
           type="button"
+          // Assuming 'actions' is defined elsewhere in your code
+          // and contains the 'login' function
           onClick={() => actions.login(formValue, navigate)}
           className="btn btn-primary"
         >
@@ -60,5 +64,4 @@ const Login = () => {
     </div>
   );
 };
-
 export default Login;

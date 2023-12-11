@@ -78,21 +78,23 @@ const ResetPassword = () => {
     };
 
     return (
-        <div>
-            <h2>Reset Password</h2>
-            {tokenValid ? (
-                <>
-                    <label>New Password:</label>
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    <label>Confirm Password:</label>
-                    <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-                    <button onClick={handleResetPassword}>Reset Password</button>
-                </>
-            ) : (
-                <p>Invalid or expired token. Please request a new password reset link.</p>
-            )}
+        <div className="reset-password-container">
+          <h2 className="reset-password-title">Reset Password</h2>
+          {tokenValid ? (
+            <>
+              <label>New Password:</label>
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+              <label>Confirm Password:</label>
+              <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+              <button onClick={handleResetPassword} className="reset-password-button">
+                Reset Password
+              </button>
+            </>
+          ) : (
+            <p className="reset-password-message">Invalid or expired token. Please request a new password reset link.</p>
+          )}
         </div>
-    );
-};
-
-export default ResetPassword;
+      );
+    };
+    
+    export default ResetPassword;

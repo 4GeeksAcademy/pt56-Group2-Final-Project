@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import  "../component/styles.css";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -30,11 +31,18 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div>
-      <h2>Forgot Password</h2>
-      <label>Email:</label>
-      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <button onClick={handleForgotPassword}>Send Reset Link</button>
+    <div className="forgot-password-container">
+      <h2 className="forgot-password-title">Forgot Password</h2>
+      <label className="forgot-password-label">Email:</label>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        className="forgot-password-input"
+      />
+      <button onClick={handleForgotPassword} className="forgot-password-button">
+        Send Reset Link
+      </button>
     </div>
   );
 };

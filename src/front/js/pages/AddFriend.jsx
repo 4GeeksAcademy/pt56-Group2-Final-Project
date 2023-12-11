@@ -24,7 +24,7 @@ const AddFriend = () => {
     }
     return (
         <div className="container mt-5 add-friend-container">
-          <form className="row g-3 border border-lightgray">
+          <form className="row g-3 border border-lightgray bg-light">
             <div className="py-2 bg-light border-bottom border-lightgray mt-0 text-center">
               <h2>Add A Travel Buddy</h2>
             </div>

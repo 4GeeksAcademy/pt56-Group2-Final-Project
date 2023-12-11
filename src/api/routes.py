@@ -375,7 +375,7 @@ def forgotpassword():
 
         access_token = create_access_token(identity=payload)
 
-        FRONTEND_URL = "https://ominous-meme-q7qv69jqw79w3rjq-3000.app.github.dev"
+        FRONTEND_URL = os.getenv('FRONTEND_URL')
         SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
 
 
