@@ -15,7 +15,7 @@ const Signup = () => {
     }
     return(
         <div className="container signup-container mt-5">
-        <form className="row g-3 border border-lightgray">
+        <form className="row g-3 border border-lightgray bg-light">
           <div className="py-2 bg-light border-bottom border-lightgray mt-0 text-center">
             <h2>Sign Up</h2>
           </div>

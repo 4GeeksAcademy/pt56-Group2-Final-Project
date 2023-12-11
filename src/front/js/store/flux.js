@@ -451,7 +451,76 @@ const getState = ({ getStore, getActions, setStore }) => {
 					//error handling
 					console.log(error);
 				})
-			}
+			},
+			sendResetPasswordLink: async (email) => {
+				const url = `${apiUrl}/api/forgotpassword`;
+			  
+				try {
+				  const response = await fetch(url, {
+					method: 'POST',
+					headers: {
+					  'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ email }),
+				  });
+			  
+				  if (response.ok) {
+					const data = await response.json();
+					console.log('Reset link sent successfully:', data);
+				  } else {
+					console.error('Error sending reset link:', response.statusText);
+				  }
+				} catch (error) {
+				  console.error('Fetch error:', error);
+				}
+			  },
+			  resetPassword: async (token, password) => {
+				const url = `${apiUrl}/api/resetpassword`;
+			  
+				try {
+				  const response = await fetch(url, {
+					method: 'POST',
+					headers: {
+					  'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ token, password }),
+				  });
+			  
+				  if (response.ok) {
+					const data = await response.json();
+					console.log('Password reset successful:', data);
+				  } else {
+					console.error('Error resetting password:', response.statusText);
+				  }
+				} catch (error) {
+				  console.error('Fetch error:', error);
+				}
+			  },
+			  validateResetToken: async (token) => {
+				const url = `${apiUrl}/api/validatepasswordresettoken`;
+			
+				try {
+				  const response = await fetch(url, {
+					method: 'POST',
+					headers: {
+					  'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ token }),
+				  });
+			
+				  if (response.ok) {
+					const data = await response.json();
+					console.log('Token validation successful:', data);
+					return true; 
+				  } else {
+					console.error('Error validating reset token:', response.statusText);
+					return false; 
+				  }
+				} catch (error) {
+				  console.error('Fetch error:', error);
+				  return false; 
+				}
+			  },
 			
 			
 			  
