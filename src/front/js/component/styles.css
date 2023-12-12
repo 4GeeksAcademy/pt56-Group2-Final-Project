@@ -254,10 +254,9 @@ body {
   }
 }
 
-/* below this line is styling for the landing page */
-
+/* Below this line is styling for the landing page */
 .landing-container {
-  background-color: #f8f9fa; 
+  background-color: #f8f9fa;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -266,73 +265,57 @@ body {
 
 /* Carousel Styles */
 .landing-container #carouselExample {
-  max-width: 25%; 
+  max-width: 75%;
   margin: 20px auto;
 }
 
-.landing-container .carousel-inner img {
+.landing-container .carousel-inner {
+  display: flex; 
+}
+
+.landing-container .carousel-item {
   width: 100%; 
-  height: auto; 
+}
+
+.landing-container .carousel-inner img {
+  width: 100%;
+  height: auto;
 }
 
 /* Welcome Section Styles */
 .landing-container .welcome-text {
   text-align: center;
-  color: #333; 
+  color: #333;
   margin-bottom: 20px;
-  padding: 15px; 
-  border-radius: 8px; 
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); 
-  background-color: #3498db; 
-  color: #ffffff; 
-}
-
-/* Mission Statement Styles */
-.landing-container {
-  background-color: #f8f9fa; 
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Carousel Styles */
-.landing-container #carouselExample {
-  max-width: 25%; 
-  margin: 20px auto;
-}
-
-.landing-container .carousel-inner img {
-  width: 100%; 
-  height: auto; 
-}
-
-/* Welcome Section Styles */
-.landing-container .welcome-text {
-  text-align: center;
-  color: #333; 
-  margin-bottom: 10px; 
-  padding: 15px; 
-  border-radius: 8px; 
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); 
-  background-color: #3498db; 
-  color: #ffffff; 
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  background-color: #3498db;
+  color: #ffffff;
 }
 
 /* Mission Statement Styles */
 .landing-container p {
-  margin-bottom: 10px; 
-  padding: 10px; 
-  border-radius: 8px; 
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
-  background-color: #27ae60; 
-  color: #ffffff; 
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #27ae60;
+  color: #ffffff;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .landing-container {
     max-width: 100%;
+  }
+
+  .landing-container #carouselExample {
+    max-width: 100%;
+  }
+
+  .landing-container .carousel-inner img {
+    width: 100%; 
   }
 }
 
