@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../store/appContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import  "../component/styles.css";
 
 const MyPosts = () => {
@@ -35,6 +35,9 @@ const MyPosts = () => {
                   {post.media && (
                     <img src={post.media} alt="media" className="img-fluid" />
                   )}
+                  <Link to={`/comments/${post.id}`}>
+						          <button className="btn btn-outline-primary">Comments</button>
+					        </Link>
                 </li>
               ))}
             </ul>

@@ -81,7 +81,8 @@ class Comment(db.Model):
         return {
             "id": self.id,
             "author": self.user_id,
-            "comment": self.comment
+            "comment": self.comment,
+            "post_id": self.post_id
             # do not serialize the password, its a security breach
         }
 
