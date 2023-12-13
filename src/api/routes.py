@@ -48,12 +48,29 @@ def getPosts():
 
     return jsonify(allPosts), 200
 
-@api.route('/comments', methods=['GET'])
-def getComments():
-    comments = Comment.query.all()
+@api.route('/comments/<int:post_id>', methods=['GET'])
+#@jwt_required()
+def getComments(post_id):
+
+    post = Post.query.filter_by(id=post_id)
+    singlePost = list(map(lambda x: x.serialize(), post))
+    
+
+    comments = Comment.query.filter_by(post_id=post_id)
     allComments = list(map(lambda x: x.serialize(), comments))
 
-    return jsonify(allComments), 200
+    for comment in allComments:
+        
+        author = User.query.filter_by(id = comment['author']).first()
+        comment["author_name"] = author.first_name + " " + author.last_name
+    
+    for post in singlePost:
+        post["comments"] = allComments
+        user = User.query.filter_by(id = post['user_id']).first()
+        post["name"] = user.first_name + " " + user.last_name
+
+
+    return jsonify(singlePost), 200
 
 @api.route('/signup', methods=['POST'])
 def createUser():
@@ -126,8 +143,9 @@ def uploadMediaToImgBB(media):
 
 
 @api.route('/createcomment', methods=['POST'])
+@jwt_required()
 def createComment():
-    user_id = request.json.get("user_id")
+    user_id = get_jwt_identity()
     post_id = request.json.get("post_id")
     comment = request.json.get("comment")
 
@@ -195,6 +213,7 @@ def removeFriend():
     return jsonify(response_body), 200
 
 @api.route('/deletecomment', methods=['DELETE'])
+@jwt_required()
 def deleteComment():
     id = request.json.get("id")
 

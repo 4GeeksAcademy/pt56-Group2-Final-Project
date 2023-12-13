@@ -521,6 +521,107 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  return false; 
 				}
 			  },
+			  authenticateComments: (postid) => {
+				const store = getStore();
+				console.log(store.token);
+				const url = apiUrl + `/api/comments/${postid}`
+				fetch(url, {
+					method: "GET",
+					headers: {
+						"Authorization": "Bearer " + store.token
+					}					
+									
+				})
+				.then(resp => {
+					console.log(resp.ok); // will be true if the response is successfull
+					console.log(resp.status); // the status code = 200 or code = 400 etc.
+					if(!resp.ok){
+						navigate("/login");
+						alert("Please login to continue");
+												
+					}
+					
+					//console.log(resp.text()); // will try return the exact result as string
+					return resp.json();
+				})
+				.then(data => {
+					setStore({comments: data});
+					console.log("DATA:", data);
+					
+				})
+				.catch(error => {
+					//error handling
+					console.log(error);
+				})
+			  },
+			  addComments: (comment, postid) => {
+				const store = getStore();
+				const url = apiUrl + "/api/createcomment"
+				//let newComment = store.comments.concat({author_name: name, comment: comment});
+				//setStore({comments: newComment});
+				//console.log(store.comments);
+				fetch(url, {
+					method: "Post",
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": "Bearer " + store.token
+					},
+					body: JSON.stringify({						
+						"comment": comment,
+						"post_id": postid
+					})					
+				})
+				.then(async resp => {
+					console.log(resp.ok); // will be true if the response is successfull
+					console.log(resp.status); // the status code = 200 or code = 400 etc.
+					if(!resp.ok){
+						alert("User doesn't exist");
+						return false;						
+					}
+					//console.log(resp.text()); // will try return the exact result as string
+					await resp.json();
+				})
+				.then(data => {
+					getActions().authenticateComments(postid);
+					
+				})				
+				.catch(error => {
+					//error handling
+					console.log(error);
+				})
+			  },
+			deleteComment: (commentid) => {
+				const store = getStore();
+				const url = apiUrl+"/api/deletecomment";
+				fetch(url, {
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": "Bearer " + store.token
+					},
+					body: JSON.stringify({						
+						"id": commentid
+					})					
+				})
+				.then(async resp => {
+					console.log(resp.ok); // will be true if the response is successfull
+					console.log(resp.status); // the status code = 200 or code = 400 etc.
+					if(!resp.ok){
+						alert("User doesn't exist");
+						return false;						
+					}
+					//console.log(resp.text()); // will try return the exact result as string
+					await resp.json();					
+				})
+				.then(data => {
+					
+					
+				})					
+				.catch(error => {
+					//error handling
+					console.log(error);
+				})
+			}
 			
 			
 			  

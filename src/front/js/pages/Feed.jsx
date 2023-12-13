@@ -1,7 +1,6 @@
 import React, {useEffect, useContext} from "react";
 import { Context } from "../store/appContext";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, Link } from "react-router-dom";
 
 const Feed = () => {
     const {store, actions} = useContext(Context);
@@ -25,7 +24,7 @@ const Feed = () => {
           <div className="row justify-content-center">
             <div className="col-md-6">
               <ul className="list-group">
-                {store.feed.map((item, index) => (
+                {store.feed.map((item, index) => (                  
                   <li key={item.id} className="list-group-item">
                     <h3>{item.name}</h3>
                     <h3>Location: {item.place_name}</h3>                    
@@ -41,7 +40,11 @@ const Feed = () => {
                         className="img-fluid"
                       />
                     )}
+                    <Link to={`/comments/${item.id}`}>
+						          <button className="btn btn-outline-primary">Comments</button>
+					          </Link>
                   </li>
+
                 ))}
               </ul>
             </div>
