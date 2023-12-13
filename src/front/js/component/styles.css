@@ -1,9 +1,9 @@
 body {
-  background-color: #aeede6; 
+  background-color: #aeede6 !important; 
 }
 /* New Post page styles below this line */
 .new-post-container {
-  max-width: 800px;
+  max-width: 800px !important;
   margin: 50px auto 0;
   padding: 20px;
   background-image: linear-gradient(to right, #2196f3, #6ec6ff); 
@@ -79,7 +79,7 @@ body {
 
 /* Container Styles */
 .my-posts-container {
-  max-width: 800px;
+  max-width: 800px !important;
   margin: 50px auto 0; 
   padding: 20px;
 }
@@ -468,14 +468,14 @@ body {
 }
 
 .feed-container .list-group-item img {
-  max-width: 100%; 
+  max-width: 100% ; 
   height: auto; 
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .feed-container {
-    max-width: 100%;
+    max-width: 100% ;
   }
 }
 
