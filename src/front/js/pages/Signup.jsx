@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useState, useEffect} from "react";
 import { Context } from "../store/appContext";
 import {useNavigate } from "react-router-dom";
 
@@ -7,18 +7,37 @@ const Signup = () => {
     const [formValue, setFormValue] = useState({first_name: "", last_name: "", email: "", password: ""});
     const navigate = useNavigate();
 
+    const [authStatus, setAuthStatus] = useState(true)
+    const [ isAlertVisible, setIsAlertVisible ] = useState(false);
+
     function onChange(e)  {				
         const id = e.target.id;
         const value = e.target.value;
         setFormValue({...formValue, [id]:value});
                             
     }
+
+    const handleSignup = async () => {
+      let result  = await actions.signUp(formValue, navigate)
+      if (result == false){
+        setIsAlertVisible(true);
+        setTimeout(() => {
+          setIsAlertVisible(false);
+        }, 2000)
+      }
+    }
+
     return(
         <div className="container signup-container mt-5">
         <form className="row g-3 border border-lightgray bg-light">
           <div className="py-2 bg-light border-bottom border-lightgray mt-0 text-center">
             <h2>Sign Up</h2>
           </div>
+          {isAlertVisible && (
+              <div className="alert alert-danger" role="alert">
+                User already exists. Please use a different email.
+              </div>
+            )}
           <div className="col-md-12">
             <label htmlFor="first_name" className="form-label">
               First Name
@@ -73,7 +92,7 @@ const Signup = () => {
           </div>
           <button
             type="button"
-            onClick={() => actions.signUp(formValue, navigate)}
+            onClick={() => handleSignup()}
             className="btn btn-primary"
           >
             Signup

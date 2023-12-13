@@ -82,8 +82,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(resp.status); // the status code = 200 or code = 400 etc.
 					if(!resp.ok){
 						navigate("/login");
-						alert("Please login to continue");
-												
+						alert("Please login to continue");											
 					}
 					
 					//console.log(resp.text()); // will try return the exact result as string
@@ -119,9 +118,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(resp.ok); // will be true if the response is successfull
 					console.log(resp.status); // the status code = 200 or code = 400 etc.
 					if(!resp.ok){
-						navigate("/login");
-						alert("Please login to continue");
-												
+						navigate("/login");												
 					}
 					
 					//console.log(resp.text()); // will try return the exact result as string
@@ -140,66 +137,75 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			signUp: async (form, navigate) => {
 				const url = apiUrl+"/api/signup";
-				await fetch(url, {
-					method: "Post",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({
-						"first_name": form.first_name,
-						"last_name": form.last_name,					
-						"email": form.email,
-                      	"password": form.password,
-					})					
-				})
-				.then(async resp => {
-					console.log(resp.ok); // will be true if the response is successfull
-					console.log(resp.status); // the status code = 200 or code = 400 etc.
-					if(!resp.ok) {
-						alert("user already exists");
-						return false;
+				try{
+					let response = await fetch(url, {
+						method: "Post",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({
+							"first_name": form.first_name,
+							"last_name": form.last_name,					
+							"email": form.email,
+							"password": form.password,
+						})					
+					})
+					if(!response.ok){
+						return false					
 					}
-					await resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
-					navigate('/login');														
-				})
-				.catch(error => {
-					//error handling
-					console.log(error);
-				})
+					else{
+						navigate('/login');														
+						return true
+					}
+				
+				}
+				catch(error){console.log(error)}
+
+
+				// .then(async resp => {
+				// 	console.log(resp.ok); // will be true if the response is successfull
+				// 	console.log(resp.status); // the status code = 200 or code = 400 etc.
+				// 	if(!resp.ok) {
+				// 		return false;
+				// 	}
+				// 	await resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
+				// 	navigate('/login');														
+				// })
+				// .catch(error => {
+				// 	//error handling
+				// 	console.log(error);
+				// })
 			},
 
-			login: (form, navigate) => {
+			login: async (form, navigate) => {
 				const store = getStore();
 				const url = apiUrl+"/api/token";
-				fetch(url, {
-					method: "Post",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({						
-						"email": form.email,
-                      	"password": form.password
-					})					
-				})
-				.then(async resp => {
-					console.log(resp.ok); // will be true if the response is successfull
-					console.log(resp.status); // the status code = 200 or code = 400 etc.
-					if(!resp.ok){
-						alert("Wrong email or password");
-						return false;						
+				try{
+					let response = await fetch(url, {
+						method: "Post",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({						
+							"email": form.email,
+							"password": form.password
+						})					
+					})
+					if(!response.ok){
+						return false					
 					}
-					//console.log(resp.text()); // will try return the exact result as string
-					const data = await resp.json();
-					sessionStorage.setItem("token", data.token);
-					setStore({token: data.token});
+					else{
+						const data = await response.json();
+						sessionStorage.setItem("token", data.token);
+						setStore({token: data.token});
 					
-					console.log(store.token);
-					navigate('/profile');
-				})				
-				.catch(error => {
-					//error handling
-					console.log(error);
-				})
+						console.log(store.token);
+						navigate('/profile');
+					}
+
+				}
+				catch(error){console.log(error)}
+				
 			},
 
 			logout: (navigate) => {			
@@ -209,37 +215,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 				navigate("/");
 			},
 
-			authenticateUser: (navigate) => {
+			authenticateUser: async (navigate) => {
 				const store = getStore();
 				console.log(store.token);
 				const url = apiUrl+"/api/private"
-				fetch(url, {
-					method: "GET",
-					headers: {
-						"Authorization": "Bearer " + store.token
+
+				try{
+					let response = await fetch(url, {
+						method: "GET",
+						headers: {
+							"Authorization": "Bearer " + store.token
+						}
+					})
+					if(!response.ok){
+						return false					
 					}
-				})
-				.then(resp => {
-					console.log(resp.ok); // will be true if the response is successfull
-					console.log(resp.status); // the status code = 200 or code = 400 etc.
-					if(!resp.ok){
-						navigate("/login");
-						alert("Please login to continue");
-												
+					else{
+						setStore({user: await response.json()});
+						return true
 					}
+				}
+				catch(error){console.log(error)}
 					
-					//console.log(resp.text()); // will try return the exact result as string
-					return resp.json();
-				})
-				.then(data => {
-					setStore({user: data});
-					console.log(data);
-					
-				})
-				.catch(error => {
-					//error handling
-					console.log(error);
-				})
 			},
 
 			tokenFromStore: () => {
@@ -305,7 +302,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  });
 			  
 				  if (response.ok) {
-					alert("Post added successfully!");
+					console.log("Post added successfully!");
 					navigate("/myposts");
 					// Update the posts in the store, if needed
 					getActions().getPosts();
@@ -331,95 +328,76 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			authenticateFriends: (navigate) => {
+			authenticateFriends: async (navigate) => {
 				const store = getStore();
 				console.log(store.token);
 				const url = apiUrl + "/api/friends"
-				fetch(url, {
-					method: "GET",
-					headers: {
-						"Authorization": "Bearer " + store.token
+				try{
+					let response = await fetch(url, {
+						method: "GET",
+						headers: {
+							"Authorization": "Bearer " + store.token
+						}
+					})
+					if(!response.ok){
+						return false					
 					}
-				})
-				.then(resp => {
-					console.log(resp.ok); // will be true if the response is successfull
-					console.log(resp.status); // the status code = 200 or code = 400 etc.
-					if(!resp.ok){
-						navigate("/login");
-						alert("Please login to continue");
-												
+					else{
+						setStore({friends: response.json()});
+						return true
 					}
-					
-					//console.log(resp.text()); // will try return the exact result as string
-					return resp.json();
-				})
-				.then(data => {
-					setStore({friends: data});					
-				})
-				.catch(error => {
-					//error handling
-					console.log(error);
-				})
+				}
+				catch(error){console.log(error)}
 			},
-			authenticatePosts: (navigate) => {
+			authenticatePosts: async (navigate) => {
 				const store = getStore();
 				console.log(store.token);
 				const url = apiUrl + "/api/posts"
-				fetch(url, {
-					method: "GET",
-					headers: {
-						"Authorization": "Bearer " + store.token
+				try{
+					let response = await fetch(url, {
+						method: "GET",
+						headers: {
+							"Authorization": "Bearer " + store.token
+						}
+					})
+					if(!response.ok){
+						return false					
 					}
-				})
-				.then(resp => {
-					console.log(resp.ok); // will be true if the response is successfull
-					console.log(resp.status); // the status code = 200 or code = 400 etc.
-					if(!resp.ok){
-						navigate("/login");
-						alert("Please login to continue");
-												
+					else{
+						setStore({posts: await response.json()});
+						return true
 					}
-					
-					//console.log(resp.text()); // will try return the exact result as string
-					return resp.json();
-				})
-				.then(data => {
-					setStore({posts: data});
-					console.log("DATA:", data);
-					
-				})
+				}
+				catch(error){console.log(error)}
 			  },
       
-			  addFriend: (form, navigate) => {
+			  addFriend: async (form, navigate) => {
+				console.log(form)
 				const store = getStore();
 				const url = apiUrl+"/api/addfriend";
-				fetch(url, {
-					method: "Post",
-					headers: {
-						"Content-Type": "application/json",
-						"Authorization": "Bearer " + store.token
-					},
-					body: JSON.stringify({						
-						"email": form.email,
-						"first_name": form.first_name,
-						"last_name": form.last_name,
-					})					
-				})
-				.then(async resp => {
-					console.log(resp.ok); // will be true if the response is successfull
-					console.log(resp.status); // the status code = 200 or code = 400 etc.
-					if(!resp.ok){
-						alert("User doesn't exist");
+				try{
+					let response = await fetch(url, {
+						method: "Post",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + store.token
+						},
+						body: JSON.stringify({						
+							"email": form.email,
+							"first_name": form.first_name,
+							"last_name": form.last_name,
+						})					
+					})
+					if(!response.ok){
+						alert("an error occurred")
 						return false;						
 					}
-					//console.log(resp.text()); // will try return the exact result as string
-					await resp.json();					
-					navigate('/friends');
-				})				
-				.catch(error => {
-					//error handling
-					console.log(error);
-				})
+					else{
+						console.log(await response.json())				
+						navigate('/friends');
+					}
+				}
+				catch(error){console.log(error)}
 			},
 			removeFriend: (friend, i, navigate) => {
 				const store = getStore();

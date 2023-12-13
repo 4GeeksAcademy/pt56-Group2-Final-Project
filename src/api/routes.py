@@ -159,6 +159,11 @@ def addFriend():
     if user == None:
         return jsonify({"msg": "user doesn't exist"}), 401
 
+    friendship = Friends.query.filter_by(user_id = current_user_id, friend_id = user.id).first()
+    if friendship:
+        return jsonify({"msg": "You're already friends with this user"}), 401
+
+    
     friend = Friends(user_id = current_user_id, friend_id = user.id)
 
     db.session.add(friend)
