@@ -12,7 +12,7 @@ const Comments = () => {
     
     useEffect(() => {
         async function authenticate() {
-           actions.authenticateComments(postid);
+           await actions.authenticateComments(postid);
         }
         setTimeout(() => {
             authenticate() }, 500)        
@@ -26,7 +26,6 @@ const Comments = () => {
     function handleSubmit(event) {
         event.preventDefault();
         actions.addComments(comment, postid);
-        console.log(comment, postid, store["user"].id);
         setComment("");
     }
     
@@ -36,8 +35,7 @@ const Comments = () => {
                 <div className="row justify-content-center">
                     <div className="col-md-6">
                         <ul className="list-group">
-                        {store.comments.map((item, index) => (
-                            <>
+                        {store.singlePost.map((item, index) => (                            
                             <li key={index} className="list-group-item">
                                 <h3>{item.name}</h3>
                                 <h3>Location: {item.place_name}</h3>                    
@@ -54,6 +52,7 @@ const Comments = () => {
                                 />
                                 )}
                             </li>
+                            ))}
                             <div className="comments">
                             <h3 className="comments-title">Comments</h3>
                             <div className="comment-form-title">Write comment</div>
@@ -62,7 +61,7 @@ const Comments = () => {
                                 <button className="comment-form-button">Submit</button>
                             </form>
                             <div className="comments-container">                        
-                                {item.comments.map((comment, index) => (                                    
+                                {store.comments.map((comment, index) => (                                    
                                     <div key={comment.id} className="comment">                                                                    
                                         <div className="comment-right-part">
                                             <div className="comment-content">
@@ -70,21 +69,19 @@ const Comments = () => {
                                             </div>
                                             <div className="comment-text">{comment.comment}</div>
                                             <div className="comment-actions">
-                                                {comment.author === store.user.id ? <div className="comment-action" onClick={() => actions.deleteComment(comment.id)}>Delete</div> : ""}
+                                                {comment.author === comment.current_user ? <div className="comment-action" onClick={() => actions.deleteComment(comment.id)}>Delete</div> : ""}
                                             </div>
                                         </div>
                                     </div>
                                 ))}
                             </div>
-                        </div>
-                        </>
-                        ))}
+                        </div>                                                
                         </ul>                
                     </div>
                 </div>
             </div>                       
         </div>
-    );
+    );   
 };
 
 export default Comments;

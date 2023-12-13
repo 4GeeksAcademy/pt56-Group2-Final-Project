@@ -22,14 +22,14 @@ export const LoggedInNavbar = () => {
                             />
                         </Link>
                 {!store.token ? 
-                    <>
+                    <div className="ml-auto">
                         <Link to="/login">
                             <button className="btn btn-primary me-1">Login</button>
                         </Link>
                         <Link to="/signup">
                             <button className="btn btn-primary">Signup</button>
                         </Link>
-                    </>
+                    </div>
                     :
                         <>
                         {/* <div className="ml-auto">

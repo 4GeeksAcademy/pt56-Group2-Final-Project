@@ -49,9 +49,9 @@ def getPosts():
     return jsonify(allPosts), 200
 
 @api.route('/comments/<int:post_id>', methods=['GET'])
-#@jwt_required()
+@jwt_required()
 def getComments(post_id):
-
+    current_user_id = get_jwt_identity()
     post = Post.query.filter_by(id=post_id)
     singlePost = list(map(lambda x: x.serialize(), post))
     
@@ -63,6 +63,7 @@ def getComments(post_id):
         
         author = User.query.filter_by(id = comment['author']).first()
         comment["author_name"] = author.first_name + " " + author.last_name
+        comment["current_user"] = current_user_id
     
     for post in singlePost:
         post["comments"] = allComments

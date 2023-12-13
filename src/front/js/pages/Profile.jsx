@@ -26,7 +26,7 @@ const Profile = () => {
                 <div className="container">
                     <div className="row justify-content-end">
                         <div className="col-3 m-2">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                            <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">
                                 Edit Profile
                             </button>
                         </div>
@@ -48,7 +48,7 @@ const Profile = () => {
                                 {store.user.places_visited? store.user.places_visited.map((place, i) => <li className="list-group-item" key={i}>{place}</li>) : "N/A"}
                             </ul>
                             <div className="row card-footer justify-content-center">
-                                <button onClick={()=>setTypeOfList("places_visited")} type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addPlaceModal">
+                                <button onClick={()=>setTypeOfList("places_visited")} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#addPlaceModal">
                                     Add New Place
                                 </button>
                             </div>
@@ -61,7 +61,7 @@ const Profile = () => {
                                 {store.user.wishlist_places? store.user.wishlist_places.map((place, i) => <li className="list-group-item" key={i}>{place}</li>) : "N/A"}
                             </ul>
                             <div className="row card-footer justify-content-center">
-                                <button onClick={()=>setTypeOfList("wishlist_places")} type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addPlaceModal">Add New Place</button>
+                                <button onClick={()=>setTypeOfList("wishlist_places")} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#addPlaceModal">Add New Place</button>
                             </div>
                         </div>
                     </div>

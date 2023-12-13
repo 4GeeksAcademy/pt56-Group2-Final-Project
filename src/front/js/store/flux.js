@@ -9,7 +9,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			comments: [],
 			friends:[],
 			loggedInAs: [],
-			feed: []
+			feed: [],
+			singlePost: [],
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -522,7 +523,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			  },
 			  authenticateComments: (postid) => {
-				const store = getStore();
+				const store = getStore();				
 				console.log(store.token);
 				const url = apiUrl + `/api/comments/${postid}`
 				fetch(url, {
@@ -545,8 +546,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return resp.json();
 				})
 				.then(data => {
-					setStore({comments: data});
-					console.log("DATA:", data);
+					setStore({comments: data[0].comments});
+					setStore({singlePost: data});
 					
 				})
 				.catch(error => {
@@ -614,7 +615,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					await resp.json();					
 				})
 				.then(data => {
-					
+					let newList = store.comments.filter((item)=> item.id != commentid);
+					setStore({comments: newList});
 					
 				})					
 				.catch(error => {
