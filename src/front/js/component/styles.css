@@ -1,9 +1,9 @@
 body {
-  background-color: #aeede6; 
+  background-color: #aeede6 !important; 
 }
 /* New Post page styles below this line */
 .new-post-container {
-  max-width: 800px;
+  max-width: 800px !important;
   margin: 50px auto 0;
   padding: 20px;
   background-image: linear-gradient(to right, #2196f3, #6ec6ff); 
@@ -79,7 +79,7 @@ body {
 
 /* Container Styles */
 .my-posts-container {
-  max-width: 800px;
+  max-width: 800px !important;
   margin: 50px auto 0; 
   padding: 20px;
 }
@@ -451,14 +451,14 @@ body {
 }
 
 .feed-container .list-group-item img {
-  max-width: 100%; 
+  max-width: 100% ; 
   height: auto; 
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .feed-container {
-    max-width: 100%;
+    max-width: 100% ;
   }
 }
 
@@ -615,6 +615,26 @@ body {
   background-color: #0056b3; 
 }
 
+/* Bootstrap alert classes */
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .forgot-password-container {
@@ -622,31 +642,33 @@ body {
   }
 }
 
+
 /* below this line is styling for reset password page  */
 .reset-password-container {
   max-width: 400px;
   margin: 50px auto 0;
   padding: 20px;
-  background-color: #ffffff; 
+  background-color: #ffffff;
   border: 1px solid #e1e1e1;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative; 
 }
 
 .reset-password-title {
-  color: #3498db; 
+  color: #3498db;
   text-align: center;
   margin-bottom: 20px;
 }
 
 .reset-password-message {
-  color: #dc3545; 
+  color: #dc3545;
 }
 
 .reset-password-container label {
   display: block;
   margin-bottom: 8px;
-  color: #555; 
+  color: #555;
 }
 
 .reset-password-container input {
@@ -659,7 +681,7 @@ body {
 }
 
 .reset-password-button {
-  background-color: #28a745; 
+  background-color: #28a745;
   color: #ffffff;
   padding: 10px 15px;
   border: none;
@@ -673,10 +695,32 @@ body {
   background-color: #218838;
 }
 
+/* Alert Styles */
+.alert {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.alert-success {
+  background-color: #28a745;
+  color: #ffffff;
+}
+
+.alert-danger {
+  background-color: #dc3545;
+  color: #ffffff;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .reset-password-container {
     max-width: 100%;
   }
 }
-
