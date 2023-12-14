@@ -15,7 +15,7 @@ export const LoggedInNavbar = () => {
 			<div className="container-fluid">
                         <Link to="/">
                             <img
-                            src="https://bcassetcdn.com/social/wwqaa4lb37/preview.png"
+                            src="https://i.ibb.co/XXDw5Wg/media.png"
                             alt="Logo"
                             className="navbar-brand mb-0 h1"
                             style={{ width: '80px', height: 'auto' }}
